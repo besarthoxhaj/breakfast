@@ -1,0 +1,19 @@
+{
+  "name": "breakfast",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tape/test.js && node jquery/test.js && node express/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/besarthoxhaj/breakfast.git"
+  },
+  "author": "Bes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/besarthoxhaj/breakfast/issues"
+  },
+  "homepage": "https://github.com/besarthoxhaj/breakfast#readme"
+}
