@@ -19,6 +19,20 @@ var test = (function () {
           console.error('ERROR: ' + message);
         }
       },
+      ok: function(value, message) {
+        if (value) {
+          console.log('PASS: ' + message);
+        } else {
+          console.error('ERROR: ' + message);
+        }
+      },
+      notOk: function(value, message) {
+        if (!value) {
+          console.log('PASS: ' + message);
+        } else {
+          console.error('ERROR: ' + message);
+        }
+      },
       end: function() {
         var nextTest = callbacks.shift();
         delete this.equal;
