@@ -12,14 +12,18 @@ var test = (function () {
           console.error('ERROR: ' + message);
         }
       },
-      notEqual: function() {
-        return !t.equal.apply(t, arguments);
+      notEqual: function(actual, expected, message) {
+        if (actual !== expected) {
+          console.log('PASS: ' + message);
+        } else {
+          console.error('ERROR: ' + message);
+        }
       },
       end: function() {
         var nextTest = callbacks.shift();
         delete this.equal;
         delete this.end;
-        nextTest();
+        if(typeof nextTest === 'function') nextTest();
       }
     };
     callbacks.push(cb.bind(null, t));
@@ -27,7 +31,7 @@ var test = (function () {
 
   test.init = function() {
     var firstTest = callbacks.shift();
-    firstTest && firstTest();
+    if (typeof firstTest === 'function') firstTest();
   };
 
   return test;
