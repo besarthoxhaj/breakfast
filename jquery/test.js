@@ -1,52 +1,18 @@
 'use strict';
-/* @flow */
 
 var test = require('../tape/index.js');
-var DOM = require('./index.js');
-
-function fakeDOM() {
-
-  var fakeClassList = ['zoo'];
-
-  fakeClassList.add = function(className) {
-    fakeClassList.push(className);
-  };
-
-  fakeClassList.remove = function(className) {
-    var idx = fakeClassList.indexOf(className);
-    fakeClassList.splice(idx,1);
-  };
-
-  fakeClassList.toggle = function(className) {
-    if(fakeClassList.indexOf(className) > -1) {
-      fakeClassList.remove(className);
-    } else {
-      fakeClassList.add(className);
-    }
-  };
-
-  var DOM = {
-    elm: [{
-      classList: fakeClassList
-    }],
-    querySelectorAll: function() {
-      return DOM.elm;
-    }
-  };
-  return DOM;
-};
+var document = require('./fakeDocument.js');
+var $ = require('./index.js');
 
 test('jQuery always return jQuery', function(t) {
-  var document = fakeDOM();
-  var $ = DOM(document);
+  document.$$reset$$();
 
   t.equal($('#Gabriel'), $, 'yeah it returns jQuery');
   t.end();
 });
 
 test('Fake element should be updated with the new class', function(t) {
-  var document = fakeDOM();
-  var $ = DOM(document);
+  document.$$reset$$();
 
   $('#foo').addClass('bar');
   var actual = document.elm[0].classList;
@@ -55,8 +21,7 @@ test('Fake element should be updated with the new class', function(t) {
 });
 
 test('Chaining addClass', function(t) {
-  var document = fakeDOM();
-  var $ = DOM(document);
+  document.$$reset$$();
 
   $('foo').addClass('foo').addClass('foobar');
   var actual = document.elm[0].classList;
@@ -66,8 +31,7 @@ test('Chaining addClass', function(t) {
 });
 
 test('removeClass', function(t) {
-  var document = fakeDOM();
-  var $ = DOM(document);
+  document.$$reset$$();
 
   $('foo').removeClass('zoo');
   var actual = document.elm[0].classList;
@@ -76,8 +40,7 @@ test('removeClass', function(t) {
 });
 
 test('toggleClass should remove an already existing class', function(t) {
-  var document = fakeDOM();
-  var $ = DOM(document);
+  document.$$reset$$();
 
   $('foo').toggleClass('zoo');
   var actual = document.elm[0].classList;
@@ -86,8 +49,7 @@ test('toggleClass should remove an already existing class', function(t) {
 });
 
 test('toggleClass should add a class that does not exist', function(t) {
-  var document = fakeDOM();
-  var $ = DOM(document);
+  document.$$reset$$();
 
   $('foo').toggleClass('mattia');
   var actual = document.elm[0].classList;
