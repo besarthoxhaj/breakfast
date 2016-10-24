@@ -2,7 +2,7 @@
 
 var test = function(description,cb) {
   var t = {
-    equal: function (actual,expected,mess) {
+    equal: function(actual,expected,mess) {
       if(actual === expected) {
         console.log('PASS: ' + mess);
       } else {
