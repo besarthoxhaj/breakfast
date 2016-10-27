@@ -16,7 +16,7 @@ var test = (function () {
         if (actual !== expected) {
           console.log('PASS: ' + message);
         } else {
-          console.error('ERROR: ' + message);
+          console.error('ERROR: ' + message + '. Expected: ' + expected + '. Actual: ' + actual);
         }
       },
       ok: function(value, message) {
