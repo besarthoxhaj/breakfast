@@ -91,8 +91,32 @@ console.log(deepEqual(
   'hello'
 )); // -> true
 ```
-- Spy
-- Mock
+- jQuery
+
+```js
+/**
+ * Let's build jQuery. The function should follow the
+ * below interface.
+ */
+
+var $ = function(/* .... */) {
+  // code here
+};
+
+var myTitle = $('h1')
+
+myTitle.addClass('welcome').text('Hello, World!');
+
+setTimeout(function() {
+  myTitle.hide();
+},1000);
+
+setTimeout(function() {
+  myTitle.show();
+},2000);
+```
+
+- Mocking
 
 Week 3
 
