@@ -37,15 +37,24 @@ var test = (function () {
         var nextTest = callbacks.shift();
         delete this.equal;
         delete this.end;
-        if(typeof nextTest === 'function') nextTest();
+        if(typeof nextTest !== undefined) {
+          console.log('#',nextTest.mess);
+          nextTest.fun();
+        }
       }
     };
-    callbacks.push(cb.bind(null, t));
+    callbacks.push({
+      fun: cb.bind(null, t),
+      mess: description
+    });
   };
 
   test.init = function() {
     var firstTest = callbacks.shift();
-    if (typeof firstTest === 'function') firstTest();
+    if (typeof firstTest !== undefined) {
+      console.log('#',firstTest.mess);
+      firstTest.fun();
+    }
   };
 
   return test;
