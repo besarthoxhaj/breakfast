@@ -37,21 +37,23 @@ var test = (function () {
         var nextTest = callbacks.shift();
         delete this.equal;
         delete this.end;
-        if(typeof nextTest !== undefined) {
+        if(nextTest !== undefined) {
           console.log('#',nextTest.mess);
           nextTest.fun();
+        } else {
+          console.log('TEST COMPLETED');
         }
       }
     };
     callbacks.push({
-      fun: cb.bind(null, t),
+      fun: cb.bind(undefined, t),
       mess: description
     });
   };
 
   test.init = function() {
     var firstTest = callbacks.shift();
-    if (typeof firstTest !== undefined) {
+    if (firstTest !== undefined) {
       console.log('#',firstTest.mess);
       firstTest.fun();
     }
