@@ -2,7 +2,7 @@
 /* @flow */
 
 class Queue {
-  constructor(maxSize) {
+  constructor() {
     this.front = -1;
     this.rear = -1;
     this.store = {};
@@ -26,7 +26,12 @@ class Queue {
     return (this.rear - this.front) + 1;
   }
   remove() {
-    return this.store[this.front++];
+    var first = this.store[++this.front];
+    if(first === undefined) {
+      this.front = -1;
+      this.rear = -1;
+    }
+    return first;
   }
 }
 
