@@ -12,6 +12,7 @@ class Node {
 class Tree {
   constructor(data) {
     this.root = new Node(data);
+    // What happens if I return `this`?
   }
   insert(data) {
 
@@ -21,18 +22,21 @@ class Tree {
     while(currentNode !== undefined) {
       if(data <= currentNode.data) {
         if(currentNode.left === undefined) {
-          return currentNode.left = newNode;
+          currentNode.left = newNode;
+          break;
         } else {
           currentNode = currentNode.left;
         }
       } else {
         if (currentNode.right === undefined) {
-          return currentNode.right = newNode;
+          currentNode.right = newNode;
+          break;
         } else {
           currentNode = currentNode.right;
         }
       }
     }
+    return this;
   }
   search(data) {
     var currentNode = this.root;

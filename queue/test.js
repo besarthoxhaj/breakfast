@@ -2,6 +2,7 @@
 /* @flow */
 
 var test = require('../tape/index.js');
+var deepEqual = require('../deep-equal/index.js');
 var Queue = require('./index.js');
 
 test('Queue -> insertion', t => {
@@ -21,6 +22,17 @@ test('Queue -> remove', t => {
   myQueue.insert('three');
   t.equal(myQueue.remove(),'one','remove return front element');
   t.equal(myQueue.getSize(),2,'got size 2 of the queue');
+  t.end();
+});
+
+test('Queue -> remove with `while` loop', t => {
+  var Q = (new Queue).insert('one').insert('two').insert('three');
+  var store = [];
+  while (!Q.isEmpty()) {
+    store.push(Q.getFront());
+    Q.remove();
+  }
+  t.ok(deepEqual(store,['one','two','three']),'got right order');
   t.end();
 });
 
