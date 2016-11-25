@@ -15,6 +15,7 @@ class Queue {
       this.rear = this.rear + 1;
     }
     this.store[this.rear] = data;
+    return this;
   }
   isEmpty() {
     return this.front === -1 || this.rear === -1;

@@ -88,8 +88,27 @@ var postOrder = function(node) {
   return store;
 };
 
+/**
+ * [isBinarySearchTree description]
+ * @return {Boolean} [description]
+ */
+var isBinarySearchTree = function(node) {
+  return (function checkBst(currentNode,minValue,maxValue) {
+    if(currentNode === undefined) return true;
+    if(currentNode.data > minValue && currentNode.data < maxValue
+      && checkBst(currentNode.left,minValue,currentNode.data)
+      && checkBst(currentNode.right,currentNode.data,maxValue)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }(node,0,100));
+};
+
 if (typeof module === 'object' && module.exports) {
   module.exports = {
+    isBinarySearchTree,
     postOrder,
     preOrder,
     inOrder,
