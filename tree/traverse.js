@@ -12,7 +12,7 @@ var Queue = require('../queue/index.js');
 var fifo = function(rootNode) {
   var store = [];
   var Q = (new Queue()).insert(rootNode);
-  // console.log('Q',Q);
+
   // If Q is empty and node does not have child, exit.
   // If Q is not empty but node got child.
   // Push child, first left than right, of node to queue.
@@ -56,6 +56,11 @@ var preOrder = function(node) {
   return store;
 };
 
+/**
+ * [inOrder description]
+ * @param  {[type]} node [description]
+ * @return {[type]}      [description]
+ */
 var inOrder = function(node) {
   var store = [];
   (function selfPreOrder(currentNode) {
@@ -67,6 +72,11 @@ var inOrder = function(node) {
   return store;
 };
 
+/**
+ * [postOrder description]
+ * @param  {[type]} node [description]
+ * @return {[type]}      [description]
+ */
 var postOrder = function(node) {
   var store = [];
   (function selfPreOrder(currentNode) {
