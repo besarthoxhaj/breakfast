@@ -103,14 +103,140 @@ var isBinarySearchTree = function(node) {
     } else {
       return false;
     }
-  }(node,0,100));
+  }(node,-Infinity,Infinity));
 };
+
+/**
+ * 
+ */
+var findMax = function(node) {
+  // while loop through the RIGHT elements
+  // of the tree and keep looping until
+  // an null or undefined is found
+  var currentNode = node;
+  while (currentNode.right !== undefined) {
+    currentNode = currentNode.right;
+  }
+  return currentNode;
+};
+
+/**
+ * 
+ */
+var findMin = function(node) {
+  // while loop through the LEFT elements
+  // of the tree and keep looping until
+  // an null or undefined is found
+  var currentNode = node;
+  while (currentNode.left !== undefined) {
+    currentNode = currentNode.left;
+  }
+  return currentNode;
+};
+
+/**
+ * 
+ */
+var findHeight = function(node) {
+  // find height of the LEFT subtree
+  // find height of the RIGHT subtree
+  // get the MAX of them
+  // add +1 and thats the height
+  if(node === undefined) return -1;
+  var leftHeight = findHeight(node.left);
+  var rightHeight = findHeight(node.right);
+  return (leftHeight < rightHeight ? rightHeight : leftHeight) + 1;
+};
+
+/**
+ * [deleteNode description]
+ * @param  {[type]} node [description]
+ * @return {[type]}      [description]
+ */
+ var deleteNode = function(nodeRoot,nodeValue) {
+
+   var parentNode = undefined;
+   var currentNode = nodeRoot;
+
+   while(currentNode !== undefined) {
+     if(currentNode.data > nodeValue) {
+       parentNode = currentNode;
+       currentNode = currentNode.left;
+     } else if(currentNode.data < nodeValue) {
+       parentNode = currentNode;
+       currentNode = currentNode.right;
+     } else {
+       break;
+     }
+   }
+
+   // NO CHILD
+   // check if node is a leaf, if so
+   // delete the reference from the
+   // parent after finding if the
+   // currentNode is on the left or
+   // on the right
+   if(currentNode.left === undefined && currentNode.right === undefined) {
+     if(currentNode.data > parentNode.data) {
+       delete parentNode.right;
+     } else {
+       delete parentNode.left;
+     }
+     return;
+   }
+
+   // ONE CHILD - RIGHT
+   // if the node has only the right child
+   // assign the value of the right child
+   // of the currentNode node to the right
+   // or left child of the parentNode
+   if(currentNode.left === undefined && currentNode.right !== undefined) {
+     if(currentNode.data > parentNode.data) {
+        parentNode.right = currentNode.right;
+      } else {
+        parentNode.left = currentNode.right;
+      }
+      return;
+   }
+
+   // ONE CHILD - LEFT
+   if(currentNode.left !== undefined && currentNode.right === undefined) {
+     if(currentNode.data > parentNode.data) {
+        parentNode.right = currentNode.left;
+      } else {
+        parentNode.left = currentNode.left;
+      }
+      return;
+   }
+
+   // TWO CHILD - case LEFT
+  //  if(currentNode.data < parentNode.data) {
+  //    parentNode.left = currentNode.left;
+  //  } else {
+  //    parentNode.right = currentNode.left;
+  //  }
+  //  var maxNode = findMax(currentNode.left);
+  //  maxNode.right = currentNode.right;
+
+   // TWO CHILD - case RIGHT
+   if(currentNode.data < parentNode.data) {
+     parentNode.left = currentNode.right;
+   } else {
+     parentNode.right = currentNode.right;
+   }
+   var minNode = findMin(currentNode.right);
+   minNode.left = currentNode.left;
+ };
 
 if (typeof module === 'object' && module.exports) {
   module.exports = {
     isBinarySearchTree,
+    findHeight,
+    deleteNode,
     postOrder,
     preOrder,
+    findMax,
+    findMin,
     inOrder,
     fifo,
   };

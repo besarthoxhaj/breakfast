@@ -77,4 +77,12 @@ Is a tree in which for each node, the value of all the nodes in the left subtree
 
 ## Memory allocation
 
+## Javascript consideration
+
+In javascript it is not possible to delete a variable declaration, example:
+
+```js
+
+```
+
 ## Resources
