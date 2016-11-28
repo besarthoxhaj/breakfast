@@ -42,4 +42,20 @@ test('Algorithm -> traverse Breadth-Frist search', t => {
   t.end();
 });
 
+test('Algorithm -> find shortest path', t => {
+  var graph = new Graph();
+  graph.insertNode('A').insertNode('B').insertNode('C').insertNode('D')
+    .insertNode('E').insertNode('F').insertNode('G').insertNode('H');
+
+  graph.insertEdge('A','B').insertEdge('A','D').insertEdge('A','G')
+    .insertEdge('B','E').insertEdge('B','F')
+    .insertEdge('E','G')
+    .insertEdge('F','C')
+    .insertEdge('H','C');
+
+  var shortestPath = findPathFromTo(graph,'A','H');
+  t.ok(deepEqual(shortestPath,['A','B','F','C','H']),'got right path');
+  t.end();
+});
+
 test.init();

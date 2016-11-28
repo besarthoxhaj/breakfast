@@ -46,7 +46,7 @@ var traverseDfs = function(graphRoot) {
  * @param  {[type]} graphRoot [description]
  * @return {[type]}           [description]
  */
-var traverseBfs = function(graphRoot) {
+var traverseBfs = function(graphRoot,processFn) {
   var Q = new Queue();
   var visited = [];
 
@@ -74,8 +74,36 @@ var traverseBfs = function(graphRoot) {
  * @param  {[type]} B     [description]
  * @return {[type]}       [description]
  */
-var findPathFromTo = function(graph,A,B) {
-  // find
+var findPathFromTo = function(graphRoot,A,B) {
+
+  // start from the fist node
+  var Q = new Queue();
+  var visited = [];
+  var table = {};
+
+  Q.insert(graphRoot.nodes[0]);
+  visited.push(graphRoot.nodes[0]);
+
+  while (!Q.isEmpty()) {
+    var frontQueue = Q.remove();
+    var edges = graphRoot.edges[frontQueue];
+    for(var ii = 0; ii < edges.length; ii++) {
+      if(visited.indexOf(edges[ii]) === -1) {
+        visited.push(edges[ii]);
+        Q.insert(edges[ii]);
+        // save from where we came
+        table[edges[ii]] = frontQueue;
+      }
+    }
+  }
+
+  var path = [B];
+
+  while(path[path.length - 1] !== A) {
+    path.push(table[path[path.length - 1]]);
+  }
+
+  return path.reverse();
 };
 
 if (typeof module === 'object' && module.exports) {
