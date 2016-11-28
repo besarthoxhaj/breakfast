@@ -27,11 +27,13 @@ class Queue {
     return (this.rear - this.front) + 1;
   }
   remove() {
-    var first = this.store[++this.front];
-    if(first === undefined) {
+    if(this.front === this.rear) {
+      var lastFront = this.store[this.front];
       this.front = -1;
       this.rear = -1;
+      return lastFront;
     }
+    var first = this.store[this.front++];
     return first;
   }
 }

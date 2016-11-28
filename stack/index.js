@@ -9,6 +9,12 @@ class Stack {
   push(data) {
     this.store[++this.size] = data;
   }
+  getTop() {
+    return this.store[this.size];
+  }
+  isEmpty() {
+    return (this.size === 0);
+  }
   pop() {
     if(this.size === 0) {
       return undefined;
