@@ -17,6 +17,12 @@ findPathFromTo(A,B)
 
 ### Edge list
 
+## Application
+
+- Direction on a roads network with highway and normal inner-city roads.
+- The internet with DNS.
+- Implementation of secure and reliable network, where we send different packets on different routes.
+
 ## Resources
 
 - [Graph Traversals - Breadth First and Depth First](https://www.youtube.com/watch?v=bIA8HEEUxZI&t=1s)
