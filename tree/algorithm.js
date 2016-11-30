@@ -148,91 +148,113 @@ var findHeight = function(node) {
   return (leftHeight < rightHeight ? rightHeight : leftHeight) + 1;
 };
 
-/**
- * [deleteNode description]
- * @param  {[type]} node [description]
- * @return {[type]}      [description]
- */
- var deleteNode = function(nodeRoot,nodeValue) {
+// routine tree-to-vine(root)
+//     // Convert tree to a "vine", i.e., a sorted linked list,
+//     // using the right pointers to point to the next node in the list
+//     tail ← root
+//     rest ← tail.right
+//     while rest ≠ nil
+//         if rest.left = nil
+//             tail ← rest
+//             rest ← rest.right
+//         else
+//             temp ← rest.left
+//             rest.left ← temp.right
+//             temp.right ← rest
+//             rest ← temp
+//             tail.right ← temp
 
-   var parentNode = undefined;
-   var currentNode = nodeRoot;
+var leftRotate = function(root) {
+  if(root.right !== undefined) {
+    var pivot = root.right;
+    root.right = pivot.left;
+    pivot.left = root;
+    root = pivot.left;
+    root = pivot;
+  }
 
-   while(currentNode !== undefined) {
-     if(currentNode.data > nodeValue) {
-       parentNode = currentNode;
-       currentNode = currentNode.left;
-     } else if(currentNode.data < nodeValue) {
-       parentNode = currentNode;
-       currentNode = currentNode.right;
-     } else {
-       break;
-     }
-   }
+  return root;
+};
 
-   // NO CHILD
-   // check if node is a leaf, if so
-   // delete the reference from the
-   // parent after finding if the
-   // currentNode is on the left or
-   // on the right
-   if(currentNode.left === undefined && currentNode.right === undefined) {
-     if(currentNode.data > parentNode.data) {
-       delete parentNode.right;
-     } else {
-       delete parentNode.left;
-     }
-     return;
-   }
+var rightRotate = function(root) {
+  if(root.left !== undefined) {
+    var pivot = root.left;
+    root.left = pivot.right;
+    pivot.right = root;
+    root = pivot.right;
+    root = pivot;
+  }
 
-   // ONE CHILD - RIGHT
-   // if the node has only the right child
-   // assign the value of the right child
-   // of the currentNode node to the right
-   // or left child of the parentNode
-   if(currentNode.left === undefined && currentNode.right !== undefined) {
-     if(currentNode.data > parentNode.data) {
-        parentNode.right = currentNode.right;
+  return root;
+};
+
+var treeToVine = function(root) {
+
+  while(root.left !== undefined) {
+    root = rightRotate(root);
+  }
+
+  if(root.right !== undefined) {
+    root.right = treeToVine(root.right);
+  }
+
+  return root;
+};
+
+var countNodes = function(root) {
+
+  var ii = 0;
+  var currentNode = treeToVine(JSON.parse(JSON.stringify(root)));
+
+  while(currentNode.right !== undefined) {
+    currentNode = currentNode.right;
+    ii++;
+  }
+
+  return ii;
+};
+
+var balanceTree = function(root) {
+
+  if(root === undefined) return;
+  var root = treeToVine(root);
+
+  return (function balance(rootNode) {
+    if(rootNode === undefined) return undefined;
+    var currentNode = rootNode;
+    while(
+      Math.abs(
+        findHeight(currentNode.left) - findHeight(currentNode.right)
+      ) > 1
+    ) {
+      var isLeft = (findHeight(currentNode.left) - findHeight(currentNode.right)) > 1;
+      var isRight = (findHeight(currentNode.right) - findHeight(currentNode.left)) > 1;
+      if(isLeft) {
+        currentNode = rightRotate(currentNode);
       } else {
-        parentNode.left = currentNode.right;
+        currentNode = leftRotate(currentNode);
       }
-      return;
-   }
-
-   // ONE CHILD - LEFT
-   if(currentNode.left !== undefined && currentNode.right === undefined) {
-     if(currentNode.data > parentNode.data) {
-        parentNode.right = currentNode.left;
-      } else {
-        parentNode.left = currentNode.left;
-      }
-      return;
-   }
-
-   // TWO CHILD - case LEFT
-  //  if(currentNode.data < parentNode.data) {
-  //    parentNode.left = currentNode.left;
-  //  } else {
-  //    parentNode.right = currentNode.left;
-  //  }
-  //  var maxNode = findMax(currentNode.left);
-  //  maxNode.right = currentNode.right;
-
-   // TWO CHILD - case RIGHT
-   if(currentNode.data < parentNode.data) {
-     parentNode.left = currentNode.right;
-   } else {
-     parentNode.right = currentNode.right;
-   }
-   var minNode = findMin(currentNode.right);
-   minNode.left = currentNode.left;
- };
+    }
+    if(
+      Math.max(findHeight(currentNode.left) + 1,findHeight(currentNode.right) + 1) 
+      >
+      Math.log2(countNodes(currentNode))
+    ) {
+      currentNode.right = balance(currentNode.right);
+      currentNode.left = balance(currentNode.left);
+    }
+    return currentNode;
+  }(root));
+};
 
 if (typeof module === 'object' && module.exports) {
   module.exports = {
     isBinarySearchTree,
+    balanceTree,
+    rightRotate,
+    leftRotate,
     findHeight,
-    deleteNode,
+    treeToVine,
     postOrder,
     preOrder,
     findMax,

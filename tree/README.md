@@ -86,3 +86,5 @@ In javascript it is not possible to delete a variable declaration, example:
 ```
 
 ## Resources
+
+- https://xuyuanguo.wordpress.com/2013/02/06/dsw-algorithm-balancing-binary-search-tree/
