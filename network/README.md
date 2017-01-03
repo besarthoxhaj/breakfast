@@ -20,15 +20,30 @@ http://www8.org/w8-papers/5c-protocols/key/key.html
 
 `traceroute` view the entire path a packet takes to get from one device to another
 
-`dig` troubleshoot DNS name resolution. It uses the operating system DNS resolver library 
+`dig` troubleshoot DNS name resolution. It uses the operating system DNS resolver library.
 
 `netstat` display TCP/IP statistics and connections
 
-`route` display and manage the routing table
+```sh
+$ host -v 216.58.204.33
+Trying "33.204.58.216.in-addr.arpa"
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 45795
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
 
-`nslookup` almost killed in favour of `host` and `dig` it is used to obtain domain name or IP address mapping. It 
+;; QUESTION SECTION:
+;33.204.58.216.in-addr.arpa.	IN	PTR
 
-`host` 
+;; ANSWER SECTION:
+33.204.58.216.in-addr.arpa. 74905 IN	PTR	lhr25s12-in-f1.1e100.net.
+
+Received 82 bytes from 194.168.4.100#53 in 26 ms
+```
+
+`telnet`
+
+`wireshark`
+
+`fuser` a command line tool to identify processes using files or sockets.
 
 ## Transmission Control Protocol (TCP)
 
@@ -90,11 +105,16 @@ this will instruct the browser to always contact the website over HTTPS for the 
 
 ## Resources
 
+- [Networking Tutorials for Beginners by devGeeK](https://www.youtube.com/watch?v=xpXhudbsrr8)
+- [Networking Tutorial](https://www.youtube.com/playlist?list=PLowKtXNTBypH19whXTVoG3oKSuOcw_XeW)
+- [Computer Networks](https://www.youtube.com/playlist?list=PLEbnTDJUr_IegfoqO4iPnPYQui46QqT0j)
 - [Slow Loris Attack](https://youtu.be/XiFkyR35v2Y)
 - [Hacking DNS](https://www.youtube.com/watch?v=zRysni9ND2w)
 - [DNSCurve: Usable security for DNS](https://dnscurve.org/forgery.html)
 - [Open Systems Interconnection model](https://en.wikipedia.org/wiki/OSI_model)
+- [Computer Systems Security by MIT](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-858-computer-systems-security-fall-2014/)
 
-## 
+## Projects
 
-- Internet Service Provider (ISP)
+- [Linux IP Networking](https://goo.gl/yL6RwQ)
+- [The Ars guide to building a Linux router from scratch](https://goo.gl/ffON6v)
