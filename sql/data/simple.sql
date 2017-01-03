@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS film CASCADE;
+DROP TABLE IF EXISTS actor CASCADE;
+
+CREATE TABLE film (
+  id     SERIAL PRIMARY KEY,
+  title  VARCHAR(20)
+);
+
+CREATE TABLE actor (
+  id     SERIAL PRIMARY KEY,
+  name   VARCHAR(20)
+);
+
+INSERT INTO film (title) VALUES ("Rocky 1");
