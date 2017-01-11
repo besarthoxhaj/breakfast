@@ -39,7 +39,7 @@ CREATE TABLE product (
 
 CREATE TABLE "order" (
   id           SERIAL,
-  created_at   DATE NOT NULL DEFAULT CURRENT_DATE,
+  month        VARCHAR(20),
   quantity     INTEGER NOT NULL,
   product_id   INTEGER,
   salesman_id  INTEGER,
@@ -66,25 +66,29 @@ INSERT INTO product (name,description,price) VALUES ('Coke','Sugar drink',0.50);
 INSERT INTO product (name,description,price) VALUES ('Ferrari','Motor car',110000.00);
 INSERT INTO product (name,description,price) VALUES ('Blender','Makes great smoothes',10.50);
 
-INSERT INTO "order" (quantity,product_id,salesman_id,customer_id) VALUES (
+INSERT INTO "order" (month,quantity,product_id,salesman_id,customer_id) VALUES (
+  'Jan',
   10,
   (SELECT id FROM product WHERE name = 'Coke'),
   (SELECT id FROM salesman WHERE name = 'James Hoog'),
   (SELECT id FROM customer WHERE name = 'Nick Rimando')
 );
-INSERT INTO "order" (quantity,product_id,salesman_id,customer_id) VALUES (
+INSERT INTO "order" (month,quantity,product_id,salesman_id,customer_id) VALUES (
+  'Jan',
   1,
   (SELECT id FROM product WHERE name = 'Ferrari'),
   (SELECT id FROM salesman WHERE name = 'Paul Adam'),
   (SELECT id FROM customer WHERE name = 'Jozy Altidor')
 );
-INSERT INTO "order" (quantity,product_id,salesman_id,customer_id) VALUES (
+INSERT INTO "order" (month,quantity,product_id,salesman_id,customer_id) VALUES (
+  'Jan',
   1,
   (SELECT id FROM product WHERE name = 'Ferrari'),
   (SELECT id FROM salesman WHERE name = 'Paul Adam'),
   (SELECT id FROM customer WHERE name = 'Geoff Camero')
 );
-INSERT INTO "order" (quantity,product_id,salesman_id,customer_id) VALUES (
+INSERT INTO "order" (month,quantity,product_id,salesman_id,customer_id) VALUES (
+  'Feb',
   2,
   (SELECT id FROM product WHERE name = 'Blender'),
   (SELECT id FROM salesman WHERE name = 'James Hoog'),
