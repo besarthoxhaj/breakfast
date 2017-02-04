@@ -7,10 +7,8 @@
  * If the two arguments of `t` are equal should print `OK:<message text>`.
  */
 
-var test = function (/* initial args */) {
-  // store inside
-  // define interface
-  // return something
+function test (message,callbackFun) {
+  // code here
 }
 
 test('First',function(t) {
@@ -25,3 +23,28 @@ test('Third', function(t) {
   t.equal(3,3,'three is equal to three');
 });
 ```
+
+When run the code should produce this output.
+
+![repl](https://git.io/vDcYn)
+
+**Please** don't look around the internet, will not help you much, even if you
+find the solution. Note how the second argument of the `test` function is **another function**.
+
+Let's have a look at the first example. At runtime the arguments of `test` are:
+
+```js
+message = 'First'
+
+// while
+
+callbackFun = function (t) {
+  t.equal(1,1,'one is equal to one');
+}
+```
+
+To complete the requirements you need to log `message` and to evaluate and log
+what's in the body of `callbackFun`. How can you do that? By calling `callbackFun`
+itself! Note however that you have to pass one argument (`t`) to `callbackFun`.
+
+Good luck, and see you in one hour class! :)
