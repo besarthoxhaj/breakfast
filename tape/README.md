@@ -26,8 +26,14 @@ test('Third', function(t) {
 
 When run the code should produce this output.
 
-![repl](https://git.io/vDcYn)
-
+```
+# First
+OK: one is equal to one
+# Second
+ERROR: two is equal to two
+# Third
+OK: three is equal to three
+```
 **Please** don't look around the internet, will not help you much, even if you
 find the solution. Note how the second argument of the `test` function is **another function**.
 
