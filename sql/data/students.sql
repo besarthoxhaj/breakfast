@@ -24,5 +24,3 @@ INSERT INTO student (name,discipline) VALUES ('Geoff','DH');
 INSERT INTO student (name,discipline) VALUES ('Julian','DH');
 INSERT INTO student (name,discipline) VALUES ('Julian','SL');
 INSERT INTO student (name,discipline) VALUES ('Jozy','KB');
-
-

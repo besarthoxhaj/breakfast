@@ -1,10 +1,27 @@
 ## SQL
 
-The absolute mess!
+```sh
+# run commands from the terminal
+$ psql 
 
-> The SQL syntax is not very consistent regarding what tokens identify commands and which are operands or parameters.
+```
 
-Install postgres via Homebrew.
+## Table reference
+
+```
+<from clause> ::=
+  FROM <table reference>
+    [ { <comma> <table reference> } ... ]
+```
+
+where `table reference` is defined as
+
+```
+<table reference> ::=
+    <table name>
+  | <derived table>
+  | <joined table>
+```
 
 ## Resources
 
