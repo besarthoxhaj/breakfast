@@ -2,9 +2,27 @@
 
 [Standard 1992](http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt)
 
-> The SQL syntax is not very consistent regarding what tokens identify commands and which are operands or parameters.
+```sh
+# run commands from the terminal
+$ psql 
+```
 
-Install postgres via Homebrew.
+## Table reference
+
+```
+<from clause> ::=
+  FROM <table reference>
+    [ { <comma> <table reference> } ... ]
+```
+
+where `table reference` is defined as
+
+```
+<table reference> ::=
+    <table name>
+  | <derived table>
+  | <joined table>
+```
 
 ## Syntax
 
