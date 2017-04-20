@@ -4,7 +4,8 @@
 
 ```sh
 # run commands from the terminal
-$ psql 
+$ psql -f 001.sql
+
 ```
 
 ## Table reference
@@ -57,3 +58,4 @@ There are ...
 
 - [Running SQL scripts with psql](https://goo.gl/4Zg947)
 - [Domain Logic and SQL](https://goo.gl/Q2iBjC)
+- [10 Easy Steps to Understanding SQL](https://goo.gl/RMschv)
