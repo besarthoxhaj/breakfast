@@ -21,7 +21,8 @@ $ postgres -D server
 # "/server/postgresql.conf": No such file or directory
 ```
 
-Seems like `postgres` needs a configuration file, let's create an empty one.
+What's `postgresql.conf` and why we need one? Seems like `postgres` needs a
+configuration file, let's create an empty one.
 
 ```bash
 $ touch server/postgresql.conf
@@ -71,3 +72,50 @@ $ postgres -D server/
 # DETAIL: File "/server/PG_VERSION" is missing.
 ```
 
+What's that? Let's check how the default one looks like:
+
+```bash
+$ ls -l /usr/local/var/postgres/
+# -rw-------   1 besartshyti  admin      4 Apr 21 08:05 PG_VERSION
+# drwx------   5 besartshyti  admin    170 Apr 21 08:05 base
+# drwx------  56 besartshyti  admin   1904 Apr 21 08:05 global
+# drwx------   3 besartshyti  admin    102 Apr 21 08:05 pg_clog
+# drwx------   2 besartshyti  admin     68 Apr 21 08:05 pg_commit_ts
+# drwx------   2 besartshyti  admin     68 Apr 21 08:05 pg_dynshmem
+# -rw-------   1 besartshyti  admin   4477 Apr 21 08:05 pg_hba.conf
+# -rw-------   1 besartshyti  admin   1636 Apr 21 08:05 pg_ident.conf
+# drwx------   4 besartshyti  admin    136 Apr 21 08:05 pg_logical
+# drwx------   4 besartshyti  admin    136 Apr 21 08:05 pg_multixact
+# drwx------   3 besartshyti  admin    102 Apr 21 08:05 pg_notify
+# drwx------   2 besartshyti  admin     68 Apr 21 08:05 pg_replslot
+# drwx------   2 besartshyti  admin     68 Apr 21 08:05 pg_serial
+# drwx------   2 besartshyti  admin     68 Apr 21 08:05 pg_snapshots
+# drwx------   2 besartshyti  admin     68 Apr 21 08:05 pg_stat
+# drwx------   2 besartshyti  admin     68 Apr 21 08:05 pg_stat_tmp
+# drwx------   3 besartshyti  admin    102 Apr 21 08:05 pg_subtrans
+# drwx------   2 besartshyti  admin     68 Apr 21 08:05 pg_tblspc
+# drwx------   2 besartshyti  admin     68 Apr 21 08:05 pg_twophase
+# drwx------   4 besartshyti  admin    136 Apr 21 08:05 pg_xlog
+# -rw-------   1 besartshyti  admin     88 Apr 21 08:05 postgresql.auto.conf
+# -rw-------   1 besartshyti  admin  22230 Apr 21 08:05 postgresql.conf
+```
+
+There it is!
+
+```bash
+$ cat /usr/local/var/postgres/PG_VERSION
+# 9.6
+$ echo '9.6' >> PG_VERSION
+```
+
+Next try:
+
+```bash
+$ postgres -D server/
+# LOG:  skipping missing configuration file "/server/postgresql.auto.conf"
+# postgres: could not find the database system
+# Expected to find it in the directory "/server",
+# but could not open file "/server/global/pg_control": No such file or directory
+```
+
+What's `pg_control` and why we need one?
