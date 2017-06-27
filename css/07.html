@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style media="screen">
+      #visualisation_one {
+        display: inline-block;
+        width: 100px;
+        background-color: blue;
+        border: 1px solid black;
+        float: left;
+      }
+
+      #visualisation_two {
+        display: inline-block;
+        width: 100px;
+        background-color: white;
+        border: 1px solid black;
+        float: left;
+      }
+
+      #visualisation_three {
+        display: inline-block;
+        width: 100px;
+        background-color: red;
+        border: 1px solid black;
+        float: left;
+      }
+    </style>
+  </head>
+  <body>
+
+    <audio crossOrigin="anonymous" id="player" src="http://localhost:9005/audio/RgKAFK5djSk"></audio>
+    <div id="visualisation_one"></div>
+    <div id="visualisation_two"></div>
+    <div id="visualisation_three"></div>
+
+    <script type="text/javascript">
+      /**
+       * http://ianreah.com/2013/02/28/Real-time-analysis-of-streaming-audio-data-with-Web-Audio-API.html
+       */
+      var audioElement = document.querySelector('#player');
+      var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+      var analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 64;
+      var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+
+      // Start to draw the data viz
+      var visualisation_one = document.querySelector('#visualisation_one');
+      var visualisation_two = document.querySelector('#visualisation_two');
+      var visualisation_three = document.querySelector('#visualisation_three');
+
+      function update() {
+        // Schedule the next update
+        requestAnimationFrame(update);
+        analyser.getByteFrequencyData(frequencyData);
+        // console.log(`frequencyData`,frequencyData);
+        // console.log(`frequencyData[0]`,frequencyData[0]);
+        visualisation_one.style.height = frequencyData[0] + 'px';
+        visualisation_two.style.height = frequencyData[5] + 'px';
+        visualisation_three.style.height = frequencyData[10] + 'px';
+      }
+
+      audioElement.addEventListener('canplay', function() {
+        var source = audioCtx.createMediaElementSource(audioElement);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+      }, false);
+
+      update();
+      // start after 3 seconds
+      setTimeout(() => {
+        audioElement.play();
+      },3000);
+    </script>
+  </body>
+</html>

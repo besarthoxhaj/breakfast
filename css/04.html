@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style media="screen">
+      .container {
+        position: relative;
+        height: 200px;
+        width: 300px;
+        overflow: hidden;
+      }
+
+      .overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.9);
+      }
+
+      .overlay img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: auto;
+        opacity: 0.5;
+      }
+
+      .content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      .content h1 {
+        color: white;
+      }
+
+      .content__holder {
+        margin: auto;
+        width: 90%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="overlay">
+        <img src="http://placekitten.com/1500/1000">
+      </div>
+      <div class="content">
+        <div class="content__holder">
+          <h1>Hello, World!</h1>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

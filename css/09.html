@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style media="screen">
+      #visualisation {
+        display: inline-block;
+        width: 500px;
+        height: 200px;
+        background-color: blue;
+        border: 1px solid black;
+        float: left;
+        background-image: linear-gradient(114deg,#3db2ed,#4acfff);
+      }
+    </style>
+  </head>
+  <body>
+
+    <audio crossOrigin="anonymous" id="player" src="http://localhost:9005/audio/Ri7-vnrJD3k"></audio>
+    <div id="visualisation"></div>
+
+    <script type="text/javascript">
+      /**
+       * http://ianreah.com/2013/02/28/Real-time-analysis-of-streaming-audio-data-with-Web-Audio-API.html
+       */
+      var audioElement = document.querySelector('#player');
+      var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+      var analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 64;
+      var frequencyData = new Uint8Array(analyser.frequencyBinCount);
+
+      // Start to draw the data viz
+      var visualisation = document.querySelector('#visualisation');
+
+      function update() {
+        // Schedule the next update
+        requestAnimationFrame(update);
+        analyser.getByteFrequencyData(frequencyData);
+        var color = [
+          frequencyData[0].toString(16),
+          frequencyData[5].toString(16),
+          frequencyData[10].toString(16),
+        ].join('');
+        visualisation.style.backgroundImage = `linear-gradient(114deg,#3db2ed,#${color})`;
+      }
+
+      audioElement.addEventListener('canplay', function() {
+        var source = audioCtx.createMediaElementSource(audioElement);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+      }, false);
+
+      update();
+      // start after 3 seconds
+      setTimeout(() => {
+        audioElement.play();
+      },3000);
+    </script>
+  </body>
+</html>

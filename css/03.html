@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Values and Units</title>
+    <style media="screen">
+      .default {
+        font-size: 200%;
+      }
+
+      .one {
+        font-size: 10%;
+      }
+
+      .two {
+        font-size: 1000%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Value and Units</h1>
+
+    <pre>
+      .default {
+        font-size: 200%;
+      }
+    </pre>
+
+    <p class="default">ems are by default 16px</p>
+    <div>
+      This one above got a font-size of 200%. Relative to what? To the parent!
+      In this case the parent is the body, which by default has a font-size
+      of 16px. That makes sense.
+    </div>
+
+    <div>
+      This introduces the concepts of <b>liquid layout</b> (changes as the viewport
+      changes) and <b>fixed width layout</b> (stays constant).
+    </div>
+
+    <h3>Experiment</h3>
+    <pre>
+      .one {
+        font-size: 10%;
+      }
+
+      .two {
+        font-size: 100%;
+      }
+    </pre>
+    <div class="one">
+      <div class="two">
+        Wrapped around multiple divs with all percentages
+      </div>
+    </div>
+  </body>
+</html>

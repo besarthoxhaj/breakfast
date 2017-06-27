@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      * {
+        transition: all 0.5s ease;
+      }
+
+      .plop {
+        position: relative;
+        width: 33%;
+        background-color: #ebebeb;
+        padding-bottom: 20%;
+        border: 1px dashed black;
+      }
+
+      .plop:hover .plop-copy {
+        transform: translateY(0);
+      }
+
+      .plop-copy {
+        transform: translateY(100%);
+        background-color: rgba(255,0,0,0.2);
+        position: absolute;
+        bottom: 0;
+        left:0 ;
+        right: 0;
+        padding: 20px;
+      }
+
+      .plop-copy .plop-heading {
+        padding: 20px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        transform: translateY(-100%);
+        font-size: 30px;
+        background-color: rgba(0,128,0,0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="plop">
+      <div class="plop-shelf">
+        <div class="plop-copy">
+          <div class="plop-heading">
+            Heading
+          </div>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil
+          accusamus fuga velit fugit sunt dolor temporibus obcaecati quas
+          laborum iusto magni quasi, doloribus possimus voluptas porro magnam
+          est! Doloremque, rerum.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
