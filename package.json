@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node tape/test.js && node jquery/test.js && node express/test.js"
+    "test": "node tape/test.js && node jquery/test.js && node express/test.js",
+    "css:watch": "browser-sync start --server css --files \"css/**/*\""
   },
   "repository": {
     "type": "git",
@@ -14,6 +15,9 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/besarthoxhaj/breakfast/issues"
+  },
+  "devDependencies": {
+    "browser-sync": "2.18.12"
   },
   "homepage": "https://github.com/besarthoxhaj/breakfast#readme"
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <script type="text/javascript">
+
+    ;(function() {
+      window.addEventListener('load', function() {
+        redirectIfNeeded();
+      });
+
+      function redirectIfNeeded() {
+        var elms = document.querySelectorAll('header .win-action-list__item a span');
+        for(var ii = 0; ii < elms.length; ii++) {
+          if(elms[ii].textContent === 'sign out') return;
+        }
+        window.location.href = 'http://player.canneslions.com';
+      }
+    })();
+    </script>
+  </body>
+</html>
