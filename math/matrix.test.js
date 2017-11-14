@@ -187,6 +187,11 @@ test('Matrix -> multiply -> NxN', t => {
     [1, 0]
   ];
 
+  var E = [
+    [1, 0],
+    [0, 1]
+  ];
+
   var C = [
     [0, 2, 1],
     [1, 0, 3],
@@ -199,7 +204,7 @@ test('Matrix -> multiply -> NxN', t => {
     [1, 0, 0]
   ];
 
-  t.ok(deepEqual(matrix.multiply(A,B),[
+  t.ok(deepEqual(matrix.multiply(A,B,E),[
     [2, 0],
     [1,-2]
   ]),'correct 2x2');
