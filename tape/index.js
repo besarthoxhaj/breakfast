@@ -3,20 +3,12 @@ var test = (function () {
 
   var callbacks = [];
   var testResult = {pass:0,fail:0};
+  var hasOnly = false;
 
   function test(description, cb) {
     var t = {
       equal: function(actual, expected, message) {
         if (actual === expected) {
-          console.log('PASS: ' + message);
-          testResult.pass++;
-        } else {
-          console.error('ERROR: ' + message + '. Expected: ' + expected + '. Actual: ' + actual);
-          testResult.fail++;
-        }
-      },
-      notEqual: function(actual, expected, message) {
-        if (actual !== expected) {
           console.log('PASS: ' + message);
           testResult.pass++;
         } else {
@@ -64,7 +56,50 @@ var test = (function () {
     });
   };
 
+  test.only = function(description, cb) {
+    hasOnly = true;
+    var t = {
+      equal: function(actual, expected, message) {
+        if (actual === expected) {
+          console.log('PASS: ' + message);
+          testResult.pass++;
+        } else {
+          console.error('ERROR: ' + message + '. Expected: ' + expected + '. Actual: ' + actual);
+          testResult.fail++;
+        }
+      },
+      ok: function(value, message) {
+        if (value) {
+          console.log('PASS: ' + message);
+          testResult.pass++;
+        } else {
+          console.error('ERROR: ' + message);
+          testResult.fail++;
+        }
+      },
+      notOk: function(value, message) {
+        if (!value) {
+          console.log('PASS: ' + message);
+          testResult.pass++;
+        } else {
+          console.error('ERROR: ' + message);
+          testResult.fail++;
+        }
+      },
+      end: function() {
+        console.log(`
+        ONLY COMPLETED:
+        PASS: ${testResult.pass}
+        FAIL: ${testResult.fail}
+        `);
+      }
+    };
+    console.log('#',description);
+    return cb(t);
+  }
+
   test.init = function() {
+    if(hasOnly) return;
     var firstTest = callbacks.shift();
     if (firstTest !== undefined) {
       console.log('#',firstTest.mess);
