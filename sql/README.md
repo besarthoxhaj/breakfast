@@ -52,7 +52,7 @@ There are ...
 
 ### Data Definition Language (DDL)
 
-## Formating 
+## Formatting
 
 ## Resources
 
