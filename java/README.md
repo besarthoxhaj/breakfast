@@ -1,5 +1,11 @@
 # Java
 
+### Compiler
+
+You can compile the code using `javac` command.
+
+http://www.tutorialspoint.com/unix_commands/javac.htm
+
 ### Example 00
 
 ```sh
@@ -36,6 +42,21 @@ The compiler will create as many class files as there are classes in the .java
 file. Or more formally the compiler creates a different output file for each type
 defined in it in a `.java` file.
 
+### Example 21
+
+Using a source file to tell the compiler where to find the class declarations.
+
+```sh
+# form /breakfast/java
+$ javac @21/sources.txt
+```
+
+Notice how the path inside of `sources.txt` has to be aware of where the command
+was run.
+
+**Resources**
+- https://stackoverflow.com/questions/6623161/javac-option-to-compile-all-java-files-under-a-given-directory-recursively
+
 ### Example 30
 
 Compiling nested classes will generate multiple files.
@@ -64,7 +85,18 @@ java mytest/server/Server
 
 ### Example 50
 
+File hierarchy is very important. Package names and folder structure are closely
+related.
 
+```sh
+# from /breakfast/java
+$ javac -classpath 50/ 50/App.java
+# will compile
+$ java -cp 50/ App
+  Echo from Globe A
+  Echo from Town A
+  Hello from App!
+```
 
 ### Concepts
 
