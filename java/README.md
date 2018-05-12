@@ -92,7 +92,7 @@ related.
 # from /breakfast/java
 $ javac -classpath 50/ 50/App.java
 # will compile
-$ java -cp 50/ App
+$ java -classpath 50/ App
   Echo from Globe A
   Echo from Town A
   Hello from App!
