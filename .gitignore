@@ -4,3 +4,4 @@ node_modules
 *.pem
 logfile
 npm-debug.log
+*.class
