@@ -29,6 +29,29 @@ The command `docker run hello-world` may fail if docker engine is not working.
 $ docker pull busybox
 ```
 
+Or it may fail if you don't have hte right credentials:
+
+```sh
+$ docker run hello-world
+#Unable to find image 'hello-world:latest' locally
+# docker: Error response from daemon: Get https://registry-1.docker.io/v2/library/hello-world/manifests/latest: unauthorized: incorrect username or password.
+# See 'docker run --help'.
+```
+
+## Install
+
+Go to the docker website and download the free version. Once installed, the `docker` command
+will be available:
+
+```sh
+$ docker --version
+# Docker version 18.03.1-ce, build 9ee9f40
+$ docker-compose --version
+# docker-compose version 1.21.1, build 5a3f1a3
+$ docker-machine --version
+# docker-machine version 0.14.0, build 89b8332
+```
+
 ## Quick start
 
 ## Swarm
@@ -37,6 +60,7 @@ $ docker pull busybox
 
 ## Questions
 
+- How do you install Docker on AWS?
 - What's a docker engine?
 - What does it main to run *natively*?
 - What is a *discrete process*?

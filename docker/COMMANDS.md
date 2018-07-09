@@ -2,8 +2,6 @@
 
 List of most used commands and what they do:
 
-
-
 #### docker container ls - [docs](https://docs.docker.com/engine/reference/commandline/container_ls/)
 
 A mirror to `ps` aka `process status`, used to check which containers are running.
@@ -72,8 +70,6 @@ $ docker build --help
 #       --target string           Set the target build stage to build.
 #       --ulimit ulimit           Ulimit options (default [])
 ```
-
-
 
 #### docker container run - [docs](https://docs.docker.com/engine/reference/commandline/container_run/)
 
