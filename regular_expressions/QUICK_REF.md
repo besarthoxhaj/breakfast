@@ -9,4 +9,8 @@
 | `[ABC]`    | **character set**                                     |
 | `[A-Z]`    | **range**                                             |
 | [^ABC]     | **negated set**                                       |
-| `.`        | **dot** anything except line breaks. i.e. `[^\n\r]`    |
+| `.`        | **dot** anything except line breaks. i.e. `[^\n\r]`   |
+
+## Refence
+
+https://regexr.com/

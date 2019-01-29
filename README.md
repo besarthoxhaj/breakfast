@@ -4,8 +4,18 @@ Your morning dose of javascript.
 
 ## Run
 
-To run the examples one of the last version of node and g++ is needed to run the examples. In order to compile the c++ run `g++ <file>` and it will produced a compiled version you can run with `./<file>.out`.
+To run the examples one of the last version of node and g++ is needed to run the
+examples. In order to compile the c++ run `g++ <file>` and it will produced a
+compiled version you can run with `./<file>.out`.
 
+## Debug
+
+If you want to debug of get a better grasp of what's happaning I suggest to run
+node in debug mode.
+
+- go to `chrome://inspect`
+- click on `Open dedicated DevTools for Node`
+- run your code with `node --inspect-brk [file]`
 
 ## Resources
 
