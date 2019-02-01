@@ -16,7 +16,6 @@ the configuration are saved. Let's try to run everything in the current folder:
 ```bash
 $ mkdir server
 $ postgres -D server
-
 # postgres: could not access the server configuration file
 # "/server/postgresql.conf": No such file or directory
 ```
@@ -49,6 +48,12 @@ $ ls -l
 
 The interesting part is at `drwxr-xr-x`. The first letter indicates that is a
 directory. We can change it by using `chmod` (aka *change mode*).
+
+To remove all permissions we can run `chmod a-x,a-w,a-r server`, where `a-x`
+means for all groups remove execute permission and the same for `w` (write) and
+`r` (read).
+
+To know more about chomd read this [simple tutorial](https://goo.gl/nWnhDa).
 
 ```bash
 $ chmod a-x,a-w,a-r server
@@ -105,7 +110,7 @@ There it is!
 ```bash
 $ cat /usr/local/var/postgres/PG_VERSION
 # 9.6
-$ echo '9.6' >> PG_VERSION
+$ echo '11' >> PG_VERSION
 ```
 
 Next try:
@@ -118,4 +123,13 @@ $ postgres -D server/
 # but could not open file "/server/global/pg_control": No such file or directory
 ```
 
-What's `pg_control` and why we need one?
+What's `pg_control` and why we need one? Not really sure but let's create an empty
+file and keep going.
+
+```bash
+$ mkdir server/global && touch server/global/pg_control
+$ postgres -D server
+# 2019-01-31 22:40:11.819 GMT [31448] LOG:  skipping missing configuration file "/Users/besartshyti/Projects/breakfast/sql/server/postgresql.auto.conf"
+# 2019-01-31 22:40:11.825 GMT [31448] PANIC:  could not read from control file: read 0 bytes, expected 288
+# Abort trap: 6
+```

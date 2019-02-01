@@ -4,8 +4,7 @@
 
 ```sh
 # run commands from the terminal
-$ psql -f 001.sql
-
+$ psql -d [database] -f _hello_world.sql
 ```
 
 ## Table reference
@@ -56,6 +55,7 @@ There are ...
 
 ## Resources
 
+- [Build your own rdbms](https://goo.gl/emqCxm)
 - [Running SQL scripts with psql](https://goo.gl/4Zg947)
 - [Domain Logic and SQL](https://goo.gl/Q2iBjC)
 - [10 Easy Steps to Understanding SQL](https://goo.gl/RMschv)

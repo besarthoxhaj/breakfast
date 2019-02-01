@@ -24,7 +24,7 @@ CREATE TABLE "stats" (
 );
 
 /**
- * 
+ *
  */
 \echo "Tables created, checking results.";
 \d+ "player";
@@ -42,4 +42,3 @@ INSERT INTO "stats" ("number","total_points","year") VALUES (55,90,'senior');
 INSERT INTO "stats" ("number","total_points","year") VALUES (23,150,'senior');
 INSERT INTO "stats" ("number","total_points","year") VALUES (23,221,'junior');
 INSERT INTO "stats" ("number","total_points","year") VALUES (55,84,'junior');
-
