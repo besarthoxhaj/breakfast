@@ -2,27 +2,46 @@
 
 [Standard 1992](http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt)
 
+
 ```sh
 # run commands from the terminal
 $ psql -d [database] -f _hello_world.sql
 ```
 
-## Table reference
+## Tables
+
+Everything in SQL is a table or table reference.
+
 
 ```
+<table expression> ::=
+  <from clause>
+  [ <where clause> ]
+  [ <group by clause> ]
+  [ <having clause> ]
+
 <from clause> ::=
   FROM <table reference>
-    [ { <comma> <table reference> } ... ]
-```
+  [ { <comma> <table reference> } ... ]
 
-where `table reference` is defined as
-
-```
 <table reference> ::=
-    <table name>
-  | <derived table>
+    <table name>    [ [ AS ] <correlation name> [ <left paren> <derived column list> <right paren> ] ]
+  | <derived table>   [ AS ] <correlation name> [ <left paren> <derived column list> <right paren> ]
   | <joined table>
+
+  <derived column list> ::= <column name list>
+
+  <column name list> ::= <column name> [ { <comma> <column name> }... ]
+
+  <derived table> ::= <table subquery>
+
+  <table subquery> ::= <subquery>
+
+  <subquery> ::= <left paren> <query expression> <right paren>
+
+  <query expression> ::=
 ```
+
 
 ## Syntax
 
@@ -59,3 +78,5 @@ There are ...
 - [Running SQL scripts with psql](https://goo.gl/4Zg947)
 - [Domain Logic and SQL](https://goo.gl/Q2iBjC)
 - [10 Easy Steps to Understanding SQL](https://goo.gl/RMschv)
+- [Postgres Tutorial](http://www.postgresqltutorial.com)
+- [Little style guide](https://goo.gl/ScCm5s)

@@ -6,12 +6,12 @@ CREATE TABLE a (
   short VARCHAR(20)
 );
 
-INSERT INTO a (url,short) VALUES ('http://foo.com/hel','aa');
-INSERT INTO a (url,short) VALUES ('http://bar.org/bes','ab');
-INSERT INTO a (url,short) VALUES ('http://bar.net/qoo','ba');
-INSERT INTO a (url,short) VALUES ('http://foo.org/bpo','bb');
-INSERT INTO a (url,short) VALUES ('http://foo.com/bes','cc');
-INSERT INTO a (url,short) VALUES ('http://zoo.com/bes','ac');
+INSERT INTO a (url, short) VALUES ('http://foo.com/hel', 'aa');
+INSERT INTO a (url, short) VALUES ('http://bar.org/bes', 'ab');
+INSERT INTO a (url, short) VALUES ('http://bar.net/qoo', 'ba');
+INSERT INTO a (url, short) VALUES ('http://foo.org/bpo', 'bb');
+INSERT INTO a (url, short) VALUES ('http://foo.com/bes', 'cc');
+INSERT INTO a (url, short) VALUES ('http://zoo.com/bes', 'ac');
 
 -- SELECT urlSource, Count(urlSource)
 -- FROM (

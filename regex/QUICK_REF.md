@@ -11,6 +11,7 @@
 | [^ABC]     | **negated set**                                       |
 | `.`        | **dot** anything except line breaks. i.e. `[^\n\r]`   |
 
-## Refence
+## References
 
 https://regexr.com/
+https://regexone.com/
