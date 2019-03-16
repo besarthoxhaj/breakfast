@@ -55,7 +55,8 @@ Notice how the path inside of `sources.txt` has to be aware of where the command
 was run.
 
 **Resources**
-- https://stackoverflow.com/questions/6623161/javac-option-to-compile-all-java-files-under-a-given-directory-recursively
+
+- https://stackoverflow.com/q/6623161
 
 ### Example 30
 
