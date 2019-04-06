@@ -8,10 +8,22 @@ var ctx = canvas.getContext('2d');
  *
  */
 var initialState = {
-  delta: 1,
-  ball: { radius: 30, x: 200, y: 50, direction: { x: '+', y: '+' } },
+  delta: 5,
+  ball: {
+    radius: 30,
+    x: 200,
+    y: 50,
+    direction: { x: '+', y: '+' }
+  },
   enemies: [],
-  paddle: {},
+  paddle: {
+    width: 60,
+    height: 10,
+    y: canvas.height - 15,
+    x: 10,
+    direction: '',
+    isPressing: false,
+  },
 };
 
 /**
@@ -45,7 +57,26 @@ function update(state) {
     paddle,
   } = state;
 
-  // update ball x and y positions
+  // --------------------------------------------------
+  // update paddle coordinates positions
+  // --------------------------------------------------
+  if (paddle.isPressing) {
+    paddle.x = paddle.direction === '+'
+      ? paddle.x + delta
+      : paddle.x - delta;
+  }
+
+  if (paddle.x >= canvas.width) {
+    paddle.x = canvas.width;
+  }
+
+  if (paddle.x <= 0) {
+    paddle.x = 0;
+  }
+
+  // --------------------------------------------------
+  // update ball coordinates positions
+  // --------------------------------------------------
   ball.x = ball.direction.x === '+'
     ? ball.x + delta
     : ball.x - delta;
@@ -65,6 +96,10 @@ function update(state) {
   var isTouchingTop = cornerTop <= 0;
   var isTouchingBottom = cornerBottom >= canvas.height;
 
+  var isTouchingPaddle = cornerBottom >= paddle.y
+    && ball.x >= paddle.x
+    && ball.x <= paddle.x + paddle.width;
+
   if (isTouchingRight) {
     ball.direction.x = '-';
   }
@@ -77,7 +112,7 @@ function update(state) {
     ball.direction.y = '+';
   }
 
-  if (isTouchingBottom) {
+  if (isTouchingBottom || isTouchingPaddle) {
     ball.direction.y = '-';
   }
 
@@ -97,6 +132,10 @@ function draw(state) {
   ctx.beginPath();
   ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
   ctx.fill();
+
+  // draw paddle
+  var paddle = state.paddle;
+  ctx.fillRect(paddle.x, canvas.height - 15, paddle.width, paddle.height);
 }
 
 /**
@@ -105,7 +144,7 @@ function draw(state) {
  */
 function main() {
 
-  document.addEventListener('keypress', (e) => {
+  document.addEventListener('keypress', e => {
 
     if (e.key === 'n') {
       var currentState = stateStore[stateStore.length - 1];
@@ -118,6 +157,35 @@ function main() {
       var previousState = stateStore.pop();
       draw(previousState);
     }
+  }, false);
+
+  document.addEventListener('keydown', e => {
+
+    var { paddle } = stateStore[stateStore.length - 1];
+
+    if(e.key === 'ArrowRight') {
+      paddle.isPressing = true;
+      paddle.direction = '+';
+    }
+
+    if(e.key === 'ArrowLeft') {
+      paddle.isPressing = true;
+      paddle.direction = '-';
+    }
+  }, false);
+
+  document.addEventListener('keyup', e => {
+
+    var { paddle } = stateStore[stateStore.length - 1];
+
+    if(e.key === 'ArrowRight') {
+      paddle.isPressing = false;
+    }
+
+    if(e.key === 'ArrowLeft') {
+      paddle.isPressing = false;
+    }
+
   }, false);
 
   var firstState = update(initialState);
