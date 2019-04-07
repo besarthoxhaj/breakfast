@@ -2,6 +2,39 @@
 
 Shoot all the enemies before they do.
 
+The game has two main functions, `update` and `draw`. The `update` function takes
+the game state and returns the next frame game state. The `draw` function instead
+simply takes any state and draws it to the canvas.
+
+This separation of concern should help the game development making it easier to reason
+about. On top of that, the state object is treated as immutable. Every time a new
+state is calculated the object representing it is cloned and stored in an array.
+
+```js
+type GameState = { /* whatever */ };
+type Update = (state: GameState) => GameState;
+type Draw = (state: GameState) => Void;
+type StoreState: Array<GameState>;
+
+var storeState = [];
+
+function update(state) {
+  // stuff
+  return newState;
+}
+
+function draw(state) {
+  // mutate canvas
+}
+
+loop(() => {
+  var currentState = storeState.last();
+  var nextState = update(currentState);
+  draw(nextState);
+  storeState.push(nextState);
+});
+```
+
 ## Canvas
 
 Draw and fill a rectangle
@@ -28,8 +61,6 @@ ctx.arc(
 );
 ctx.stroke();
 ```
-
-
 
 ## Resources
 - [MDN create a 2D game](https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript)

@@ -42,6 +42,11 @@ var initialState = {
     x: 10,
     direction: '',
     isPressing: false,
+    isFiring: false,
+  },
+  bullets: {
+    config: { radius: 5 },
+    list: []
   },
 };
 
@@ -74,6 +79,7 @@ function update(state) {
     ball,
     enemies,
     paddle,
+    bullets,
   } = state;
 
   // --------------------------------------------------
@@ -85,6 +91,13 @@ function update(state) {
       : paddle.x - delta;
   }
 
+  if (paddle.isFiring) {
+    bullets.list.push({
+      x: paddle.x + (paddle.width / 2),
+      y: paddle.y,
+    });
+  }
+
   if (paddle.x >= canvas.width) {
     paddle.x = canvas.width;
   }
@@ -92,6 +105,13 @@ function update(state) {
   if (paddle.x <= 0) {
     paddle.x = 0;
   }
+
+  // --------------------------------------------------
+  // update bullets list coordinates
+  // --------------------------------------------------
+  bullets.list.forEach(bullet => {
+    bullet.y -= delta;
+  });
 
   // --------------------------------------------------
   // update ball coordinates positions
@@ -125,7 +145,7 @@ function update(state) {
     config.y += 15;
   }
 
-  // update directions
+  // update ball directions
   var cornerRight = ball.x + ball.radius;
   var cornerLeft = ball.x - ball.radius;
   var cornerTop = ball.y - ball.radius;
@@ -155,6 +175,11 @@ function update(state) {
   if (isTouchingBottom || isTouchingPaddle) {
     ball.direction.y = '-';
   }
+
+  // bullet vs enemy collision detection
+  bullets.list.forEach(bullet => {
+
+  });
 
   return clone(state);
 }
@@ -191,6 +216,19 @@ function draw(state) {
       config.height
     );
   });
+
+  // draw bullets
+  state.bullets.list.forEach(bullet => {
+    ctx.beginPath();
+    ctx.arc(
+      bullet.x,
+      bullet.y,
+      state.bullets.config.radius,
+      0,
+      2 * Math.PI
+    );
+    ctx.fill();
+  });
 }
 
 /**
@@ -214,18 +252,29 @@ function main() {
     }
   }, false);
 
+  // setInterval(() => {
+  //   var currentState = stateStore[stateStore.length - 1];
+  //   var nextState = update(currentState);
+  //   draw(nextState);
+  //   stateStore.push(nextState);
+  // }, 50);
+
   document.addEventListener('keydown', e => {
 
     var { paddle } = stateStore[stateStore.length - 1];
 
-    if(e.key === 'ArrowRight') {
+    if (e.key === 'ArrowRight') {
       paddle.isPressing = true;
       paddle.direction = '+';
     }
 
-    if(e.key === 'ArrowLeft') {
+    if (e.key === 'ArrowLeft') {
       paddle.isPressing = true;
       paddle.direction = '-';
+    }
+
+    if (e.key === 'f') {
+      paddle.isFiring = true;
     }
   }, false);
 
@@ -239,6 +288,10 @@ function main() {
 
     if(e.key === 'ArrowLeft') {
       paddle.isPressing = false;
+    }
+
+    if (e.key === 'f') {
+      paddle.isFiring = false;
     }
 
   }, false);
