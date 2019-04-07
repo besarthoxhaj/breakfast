@@ -8,6 +8,7 @@ var ctx = canvas.getContext('2d');
  *
  */
 var initialState = {
+  score: 0,
   delta: 5,
   ball: {
     radius: 30,
@@ -20,7 +21,7 @@ var initialState = {
       width: 30,
       height: 10,
       x: 0,
-      y: 15,
+      y: 40,
       padding: 15,
       offsetLeftMin: 15,
       offsetLeft: 15,
@@ -181,7 +182,7 @@ function update(state) {
 
   });
 
-  return clone(state);
+  return state;
 }
 
 /**
@@ -229,6 +230,10 @@ function draw(state) {
     );
     ctx.fill();
   });
+
+  // draw score
+  ctx.font = '15px serif';
+  ctx.fillText('Score: ' + state.score, 20, 20);
 }
 
 /**
@@ -241,7 +246,7 @@ function main() {
 
     if (e.key === 'n') {
       var currentState = stateStore[stateStore.length - 1];
-      var nextState = update(currentState);
+      var nextState = update(clone(currentState));
       draw(nextState);
       stateStore.push(nextState);
     }
@@ -296,7 +301,7 @@ function main() {
 
   }, false);
 
-  var firstState = update(initialState);
+  var firstState = update(clone(initialState));
   draw(firstState);
   stateStore.push(firstState);
 }

@@ -35,6 +35,9 @@ loop(() => {
 });
 ```
 
+Remember when running the loop manually, to press first a key action (fire or move)
+and then `n`.
+
 ## Canvas
 
 Draw and fill a rectangle
