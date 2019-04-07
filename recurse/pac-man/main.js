@@ -7,7 +7,7 @@ var ctx = canvas.getContext('2d');
  *
  *
  */
-var delta = 1;
+var delta = 0.25;
 
 /**
  *
@@ -20,7 +20,7 @@ var board = [
   ['#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
   ['#', ' ', '#', '#', '#', '#', '#', '#', ' ', '#', '#', '#', '#', '#', ' ', '#'],
   ['#', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
-  ['#', ' ', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', ' ', '#'],
+  ['#', ' ', '#', '#', '#', '#', ' ', '#', '#', '#', ' ', '#', '#', '#', ' ', '#'],
   ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
   ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'],
 ];
@@ -34,8 +34,8 @@ var initialState = {
 
   ],
   pacman: {
-    x: 1,
-    y: 1,
+    x: 6,
+    y: 2,
     move: { x: '+', y: '' }
   },
   ghosts: {
@@ -48,7 +48,27 @@ var initialState = {
  *
  *
  */
+var stateStore = [];
+
+/**
+ *
+ *
+ */
+function clone(state) {
+  return JSON.parse(
+    JSON.stringify(
+      state
+    )
+  );
+}
+
+/**
+ *
+ *
+ */
 function update(state) {
+
+  debugger;
 
   // move pacman
   var dirX = state.pacman.move.x;
@@ -56,38 +76,46 @@ function update(state) {
   var currX = state.pacman.x;
   var currY = state.pacman.y;
 
-  var nextX = currX, nextY = currY;
+  var nextX = state.pacman.x, nextY = state.pacman.y;
 
   if (dirX === '+') {
-    nextX = currX + delta;
+    nextX = math(currX, '+', delta);
+    nextX = Math.ceil(nextX);
   } else if (dirX === '-') {
-    nextX = currX - delta;
+    nextX = math(currX, '-', delta);
+    nextX = Math.floor(nextX);
   }
 
   if (dirY === '+') {
-    nextY = currY + delta;
+    nextY = math(currY, '+', delta);
+    nextY = Math.ceil(nextY);
   } else if (dirY === '-') {
-    nextY = currY - delta;
+    nextY = math(currY, '-', delta);
+    nextY = Math.floor(nextY);
   }
 
-  var nextElm = board[nextY][nextX];
+  try {
+    var nextElm = board[nextY][nextX];
+  } catch (error) {
+    nextElm = '#';
+  }
 
   if (nextElm === ' ') {
 
     if (dirX === '+') {
-      state.pacman.x += delta;
+      state.pacman.x = math(state.pacman.x, '+', delta);
     }
 
     if (dirX === '-') {
-      state.pacman.x -= delta;
+      state.pacman.x = math(state.pacman.x, '-', delta);
     }
 
     if (dirY === '+') {
-      state.pacman.y += delta;
+      state.pacman.y = math(state.pacman.y, '+', delta);
     }
 
     if (dirY === '-') {
-      state.pacman.y -= delta;
+      state.pacman.y = math(state.pacman.y, '-', delta);
     }
   }
 
@@ -137,29 +165,50 @@ function draw(state) {
 
 document.addEventListener('keydown', e => {
 
+  var { pacman } = stateStore[stateStore.length - 1];
+
   if (e.key === 'ArrowRight') {
-    initialState.pacman.move.x = '+';
-    initialState.pacman.move.y = '';
+    pacman.move.x = '+';
+    pacman.move.y = '';
   }
 
   if (e.key === 'ArrowLeft') {
-    initialState.pacman.move.x = '-';
-    initialState.pacman.move.y = '';
+    pacman.move.x = '-';
+    pacman.move.y = '';
   }
 
   if (e.key === 'ArrowDown') {
-    initialState.pacman.move.x = '';
-    initialState.pacman.move.y = '+';
+    pacman.move.x = '';
+    pacman.move.y = '+';
   }
 
   if (e.key === 'ArrowUp') {
-    initialState.pacman.move.x = '';
-    initialState.pacman.move.y = '-';
+    pacman.move.x = '';
+    pacman.move.y = '-';
   }
 }, false);
 
-setInterval(() => {
+// document.addEventListener('keypress', e => {
+//
+//   if (e.key === 'n') {
+//     var currentState = stateStore[stateStore.length - 1];
+//     var nextState = update(clone(currentState));
+//     draw(nextState);
+//     stateStore.push(nextState);
+//   }
+//
+//   if (e.key === 'p') {
+//     var previousState = stateStore.pop();
+//     draw(previousState);
+//   }
+// }, false);
 
-  var nextState = update(initialState);
+stateStore.push(initialState);
+draw(initialState);
+
+setInterval(() => {
+  var currentState = stateStore[stateStore.length - 1];
+  var nextState = update(clone(currentState));
   draw(nextState);
-}, 200);
+  stateStore.push(nextState);
+}, 100);
