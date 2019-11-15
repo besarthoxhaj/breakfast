@@ -2,7 +2,6 @@
 
 [Standard 1992](http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt)
 
-
 ```sh
 # run commands from the terminal
 $ psql -d [database] -f _hello_world.sql

@@ -1,6 +1,10 @@
 ## Functions
 
 
+Run the examples with:
+```
+$ psql -f 013.sql -q
+```
 
 ```sql
 CREATE FUNCTION print() RETURNS VOID AS $$

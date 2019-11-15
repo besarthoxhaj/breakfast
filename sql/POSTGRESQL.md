@@ -2,8 +2,7 @@
 
 ### Installation
 
-There are always some problem when installing software. Most of the time that
-shouldn't be the case.
+There are always some problem when installing software, that shouldn't be the case.
 
 Check what you have:
 
