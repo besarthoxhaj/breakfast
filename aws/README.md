@@ -1,4 +1,3 @@
-## AWS
-
+## AWS
 
 ## Resources
