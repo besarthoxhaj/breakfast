@@ -17,6 +17,7 @@ module.exports = async function(params) {
   const searchParams = {
     type: params['type'],
     cik: params['cik'],
+    count: params['num'],
   };
 
   const searchPath = getSearchPath(searchParams);
@@ -114,7 +115,7 @@ function getSearchPath(params) {
     'https://www.sec.gov/cgi-bin/browse-edgar?',
     'action=getcompany&CIK=' + params['cik'],
     '&type=' + params['type'],
-    '&count=100',
+    '&count=' + (params['count'] > 10 ? 20 : 10),
   ].join('');
 }
 

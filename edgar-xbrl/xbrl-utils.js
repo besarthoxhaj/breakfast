@@ -29,15 +29,52 @@ exports.getIncome = function(xbrl) {
  * @param  {[type]} xbrl [description]
  * @return {[type]}      [description]
  */
+exports.getRevenue = function(xbrl) {
+
+  const contextRef = module.exports.getContext(xbrl);
+
+  const results = find(
+    xbrl['us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax'],
+    { contextRef }
+  );
+
+  if (results.length < 1) {
+    console.error('contextRef', contextRef);
+    console.error('xbrl', xbrl);
+    throw 'No results';
+  }
+
+  if (!areAllTheSame(results)) {
+    throw 'Different results';
+  }
+
+  return module.exports.formatNumber(results[0]['$t']);
+}
+
+/**
+ * [description]
+ * @param  {[type]} xbrl [description]
+ * @return {[type]}      [description]
+ */
 exports.getShares = function(xbrl) {
 
-  const total = xbrl['dei:EntityCommonStockSharesOutstanding']
-    .reduce((acc, elm) => {
+  const sharesOutstanding = xbrl['dei:EntityCommonStockSharesOutstanding'];
+  const type = Object.prototype.toString.call(sharesOutstanding);
+
+  if (type === '[object Object]') {
+    const number = sharesOutstanding['$t'];
+    return module.exports.formatNumber(number);
+  }
+
+  if (type === '[object Array]') {
+    const number = sharesOutstanding.reduce((acc, elm) => {
       acc += Number(elm['$t']);
       return acc;
     }, 0);
+    return module.exports.formatNumber(number);
+  }
 
-  return module.exports.formatNumber(total);
+  throw `Error no 'dei:EntityCommonStockSharesOutstanding'`;
 };
 
 /**
@@ -93,21 +130,24 @@ function areAllTheSame(resultsArray) {
  */
 exports.formatNumber = function(num, decimals=2) {
 
+  const sign = num > 0 ? '' : '-';
+  num = Math.abs(num);
+
   if (num < 1e3) return num;
 
   if (num >= 1e3 && num < 1e6) {
-    return (num / 1e3).toFixed(decimals) + 'K';
+    return sign + (num / 1e3).toFixed(decimals) + 'K';
   }
 
   if (num >= 1e6 && num < 1e9) {
-    return (num / 1e6).toFixed(decimals) + 'M';
+    return sign + (num / 1e6).toFixed(decimals) + 'M';
   }
 
   if (num >= 1e9 && num < 1e12) {
-    return +(num / 1e9).toFixed(decimals) + 'B';
+    return sign + (num / 1e9).toFixed(decimals) + 'B';
   }
 
   if (num >= 1e12) {
-    return +(num / 1e12).toFixed(decimals) + 'T';
+    return sign + (num / 1e12).toFixed(decimals) + 'T';
   }
 }
