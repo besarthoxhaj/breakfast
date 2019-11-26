@@ -1,0 +1,74 @@
+[
+  {
+    "symbol": "AAPL",
+    "cik": 320193
+  },
+  {
+    "symbol": "MSFT",
+    "cik": 789019
+  },
+  {
+    "symbol": "GOOGL",
+    "cik": 1652044
+  },
+  {
+    "symbol": "AMZN",
+    "cik": 1018724
+  },
+  {
+    "symbol": "FB",
+    "cik": 1326801
+  },
+  {
+    "symbol": "BRK.A",
+    "cik": 1067983
+  },
+  {
+    "symbol": "BABA",
+    "cik": 1577552
+  },
+  {
+    "symbol": "JPM",
+    "cik": 835271
+  },
+  {
+    "symbol": "V",
+    "cik": 1403161
+  },
+  {
+    "symbol": "JNJ",
+    "cik": 200406
+  },
+  {
+    "symbol": "WMT",
+    "cik": 104169
+  },
+  {
+    "symbol": "PG",
+     "cik": 80424
+  },
+  {
+    "symbol": "BAC",
+     "cik": 70858
+  },
+  {
+    "symbol": "XOM",
+    "cik": 34088
+  },
+  {
+    "symbol": "MA",
+    "cik": 1141391
+  },
+  {
+    "symbol": "T",
+    "cik": 732717
+  },
+  {
+    "symbol": "TSM",
+    "cik": 1046179
+  },
+  {
+    "symbol": "DIS",
+    "cik": 1001039
+  }
+]

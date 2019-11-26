@@ -40,4 +40,5 @@
 
 ## Resources
 
+- https://www.xbrl.org/
 - https://www.sec.gov/edgar/searchedgar/accessing-edgar-data.htm
