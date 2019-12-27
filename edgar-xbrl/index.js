@@ -7,53 +7,71 @@ const search = require('./search-edgar');
 const find = require('./find-into-xbrl-json-tree');
 const xbrlUtils = require('./xbrl-utils');
 
-(async function() {
+// const companies = require('./companies.json');
+const companies = [{"symbol": "JPM", "cik": 19617}];
 
-  const cik = 764180; // MO
-  // const cik =  1652044; // GOOGL
-  // const cik = 1326801; // FB
-  // const cik = 320193; // AAPL
-  const type = '10-Q';
-  const num = 1;
+/**
+ * Company info
+ * @param  {[type]} cik [description]
+ * @param  {[type]} num [description]
+ * @return {[type]}     [description]
+ */
+async function getCompanyInfo({ symbol, cik, num, type }) {
 
-  const list = (await search({cik, type, num}));
+  var list = await search({cik, type, num, symbol});
 
-  const dataPromise = list.map(async item => {
+  const mappedPromises = list.map(async item => {
 
-    const { data: xml } = await axios.get(item.href);
+    var { data: xml } = await axios.get(item.href);
     const xbrl = JSON.parse(xmlParser.toJson(xml));
-
     const xbrlTree = xbrl['xbrl'] || xbrl['xbrli:xbrl'];
-    const contextRef = xbrlUtils.getContext(xbrlTree);
-    const quater = [
-      contextRef.substring(6, 8),
-      contextRef.substring(2, 6),
-    ].join('-');
+    const quater = xbrlUtils.getQuater(xbrlTree);
+    const year = xbrlUtils.getYear(xbrlTree);
 
-    // fs.writeFileSync(
-    //   `${__dirname}/MO-${quater}.json`,
-    //   JSON.stringify(xbrl, null, 2)
-    // );
+    return fs.writeFileSync(
+      `${__dirname}/data/${symbol}-${year}-${quater}.json`,
+      JSON.stringify(xbrl, null, 2),
+    );
 
     try {
-
       var result = {
         ...item,
         income: xbrlUtils.getIncome(xbrlTree),
         revenue: xbrlUtils.getRevenue(xbrlTree),
-        quater: quater,
+        quater: quater + '-' + year,
         shares: xbrlUtils.getShares(xbrlTree),
+        symbol: symbol,
       };
     } catch(error) {
-      fs.writeFileSync(
-        __dirname + '/WRONG.json',
-        JSON.stringify(xbrl, null, 2)
-      );
+      // console.log(`%s error`, symbol, error);
+      // fs.writeFileSync(
+      //   `${__dirname}/${symbol}-ERROR.txt`,
+      //   error.toString()
+      // );
+      // fs.writeFileSync(
+      //   `${__dirname}/${symbol}-WRONG.json`,
+      //   JSON.stringify(xbrl, null, 2)
+      // );
     }
 
     return result;
   });
 
-  const data = await Promise.all(dataPromise);
-  console.log(`data`, data);
+  return await Promise.all(mappedPromises);
+};
+
+
+(async function() {
+
+  const results = await Promise.all(companies.map(async company => {
+
+    return await getCompanyInfo({
+      cik: company['cik'],
+      symbol: company['symbol'],
+      type: '10-Q',
+      num: 10,
+    });
+  }));
+
+  console.log('Done');
 })();

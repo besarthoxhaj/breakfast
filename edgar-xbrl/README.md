@@ -42,3 +42,5 @@
 
 - https://www.xbrl.org/
 - https://www.sec.gov/edgar/searchedgar/accessing-edgar-data.htm
+- https://www.nasdaq.com/market-activity/stocks/screener
+- https://www.slickcharts.com/sp500

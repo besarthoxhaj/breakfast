@@ -6,7 +6,10 @@ const cheerio = require('cheerio');
 const BASE_PATH = 'https://www.sec.gov';
 
 /**
- * [description]
+ * Simple scraper. Given the company id will
+ * query the HTML based "www.sec.gov" and return
+ * the actual xbrl link in a json format.
+ *
  * @param  {[type]} cik  [description]
  * @param  {[type]} type [description]
  * @param  {[type]} num  [description]
@@ -48,7 +51,8 @@ module.exports = async function(params) {
   const data = linksColumn.map((link, idx) => ({
     type: params['type'],
     href: BASE_PATH + link,
-    date: datesColumn[idx]
+    date: datesColumn[idx],
+    symbol: params['symbol'],
   })).slice(0, params['num']);
 
   return Promise.all(data.map(subSearch));
@@ -94,7 +98,9 @@ async function subSearch(link) {
       return (isXML || isINS);
     });
 
-  if (xmlTypeIdx < 0) throw 'Error';
+  if (xmlTypeIdx < 0) {
+    throw 'No actual link XBRL was found here: ' + link.href;
+  }
 
   const fileUrl = docsColumn[xmlTypeIdx];
 
@@ -105,17 +111,22 @@ async function subSearch(link) {
 }
 
 /**
- * [getSearchPath description]
+ * Search
  * @param  {[type]} params [description]
  * @return {[type]}        [description]
  */
 function getSearchPath(params) {
 
+  // edgar database always returns
+  // multiple of 10
+  const count = params['count'] > 10 ? 20 : 10;
+
+  // https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&type=10-Q&CIK=
   return [
     'https://www.sec.gov/cgi-bin/browse-edgar?',
     'action=getcompany&CIK=' + params['cik'],
     '&type=' + params['type'],
-    '&count=' + (params['count'] > 10 ? 20 : 10),
+    '&count=' + count,
   ].join('');
 }
 

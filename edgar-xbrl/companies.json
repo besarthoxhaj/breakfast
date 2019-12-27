@@ -4,6 +4,10 @@
     "cik": 320193
   },
   {
+    "symbol": "FB",
+    "cik": 1326801
+  },
+  {
     "symbol": "MSFT",
     "cik": 789019
   },
@@ -16,20 +20,12 @@
     "cik": 1018724
   },
   {
-    "symbol": "FB",
-    "cik": 1326801
-  },
-  {
     "symbol": "BRK.A",
     "cik": 1067983
   },
   {
-    "symbol": "BABA",
-    "cik": 1577552
-  },
-  {
     "symbol": "JPM",
-    "cik": 835271
+    "cik": 19617
   },
   {
     "symbol": "V",
@@ -45,11 +41,11 @@
   },
   {
     "symbol": "PG",
-     "cik": 80424
+    "cik": 80424
   },
   {
     "symbol": "BAC",
-     "cik": 70858
+    "cik": 70858
   },
   {
     "symbol": "XOM",
@@ -64,11 +60,79 @@
     "cik": 732717
   },
   {
-    "symbol": "TSM",
-    "cik": 1046179
-  },
-  {
     "symbol": "DIS",
     "cik": 1001039
+  },
+  {
+    "symbol": "INTC",
+    "cik": 50863
+  },
+  {
+    "symbol": "VZ",
+    "cik":  732712
+  },
+  {
+    "symbol": "HD",
+    "cik": 354950
+  },
+  {
+    "symbol": "KO",
+    "cik": 21344
+  },
+  {
+    "symbol": "MRK",
+    "cik": 310158
+  },
+  {
+    "symbol": "WFC",
+    "cik": 72971
+  },
+  {
+    "symbol": "CVX",
+    "cik": 93410
+  },
+  {
+    "symbol": "PFE",
+    "cik": 78003
+  },
+  {
+    "symbol": "ADBE",
+    "cik": 796343
+  },
+  {
+    "symbol": "NKE",
+    "cik": 320187
+  },
+  {
+    "symbol": "MCD",
+    "cik": 63908
+  },
+  {
+    "symbol": "CRM",
+    "cik": 1108524
+  },
+  {
+    "symbol": "TSLA",
+    "cik": 1318605
+  },
+  {
+    "symbol": "GS",
+    "cik": 886982
+  },
+  {
+    "symbol": "CL",
+    "cik": 21665
+  },
+  {
+    "symbol": "AMD",
+    "cik": 2488
+  },
+  {
+    "symbol": "ADSK",
+    "cik": 769397
+  },
+  {
+    "symbol": "SNAP",
+    "cik": 1564408
   }
 ]
