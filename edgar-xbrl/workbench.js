@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const R = require('ramda');
 const find = require('./find-into-xbrl-json-tree');
 const search = require('./search-edgar');
 const xbrlUtils = require('./xbrl-utils');
@@ -56,30 +55,29 @@ function groupByUnique(arrayStr) {
   }, {});
 }
 
-const files = readDirectorySync(`${__dirname}/data`);
-console.log(`Object.keys(files)`, Object.keys(files));
-console.log(`Object.keys(files).length`, Object.keys(files).length);
+// const files = readDirectorySync(`${__dirname}/raw_data`);
+// console.log(`Object.keys(files)`, Object.keys(files));
+// console.log(`Object.keys(files).length`, Object.keys(files).length);
 
 
-const updatedCompanies = companies.map(company => {
-
-  const firstOccurrence = Object.keys(files)
-    .filter(fileKey => fileKey.indexOf(company.symbol) > -1).pop();
-
-  const currFile = files[firstOccurrence];
-
-  if (!currFile) return;
-
-  return {
-    ...company,
-    name: xbrlUtils.getName(currFile),
-  };
-});
-console.log(`updatedCompanies`, updatedCompanies);
-// update 'companies.json'
+// const updatedCompanies = companies.map(company => {
+//
+//   const firstOccurrence = Object.keys(files)
+//     .filter(fileKey => fileKey.indexOf(company.symbol) > -1).pop();
+//
+//   const currFile = files[firstOccurrence];
+//
+//   if (!currFile) return;
+//
+//   return {
+//     ...company,
+//     name: xbrlUtils.getName(currFile),
+//   };
+// });
+// console.log(`updatedCompanies`, updatedCompanies);
 // fs.writeFileSync(
 //   `${__dirname}/companies.json`,
-//   JSON.stringify(xbrl, null, 2),
+//   JSON.stringify(updatedCompanies, null, 2),
 // );
 
 
@@ -88,21 +86,21 @@ console.log(`updatedCompanies`, updatedCompanies);
 // });
 // console.log(`similars`, similars);
 
-const quarters = Object.keys(files).map(key => {
-  return xbrlUtils.getQuater(files[key]);
-});
-console.log(`quarters.length`, quarters.length);
+// const quarters = Object.keys(files).map(key => {
+//   return xbrlUtils.getQuater(files[key]);
+// });
+// console.log(`quarters.length`, quarters.length);
 // console.log(`quarters`, quarters);
 
-const years = Object.keys(files).map(key => {
-  return xbrlUtils.getYear(files[key]);
-});
-console.log(`years.length`, years.length);
+// const years = Object.keys(files).map(key => {
+//   return xbrlUtils.getYear(files[key]);
+// });
+// console.log(`years.length`, years.length);
 // console.log(`years`, years);
 
-const fiscalYears = Object.keys(files).map(key => {
-  return xbrlUtils.getFiscalYearEnd(files[key]);
-});
+// const fiscalYears = Object.keys(files).map(key => {
+//   return xbrlUtils.getFiscalYearEnd(files[key]);
+// });
 // console.log(`fiscalYears.length`, fiscalYears.length);
 // console.log(`groupByUnique(fiscalYears)`, groupByUnique(fiscalYears));
 // console.log(`JSON.stringify(fiscalYears, null, 2)`, JSON.stringify(fiscalYears, null, 2));
@@ -131,49 +129,51 @@ const fiscalYears = Object.keys(files).map(key => {
 //   };
 // });
 
-const revenues = Object.keys(files).map(key => {
-  const currFile = files[key];
-  // if (key !== 'DIS-Q1-2018') return;
-  // const contextRef = xbrlUtils.getContext(currFile);
-  // if (contextRef !== '') return;
-  try {
-    return {
-      symbol: xbrlUtils.getTradingSymbol(currFile),
-      revenue: xbrlUtils.getRevenue(currFile),
-      period: xbrlUtils.getQuater(currFile) + '-' + xbrlUtils.getYear(currFile),
-      cik: xbrlUtils.getCik(currFile),
-    };
-  } catch(error) {
-    console.log('key %s, revenues:error', key, error);
-    // const similarResults = getKeySimilarTo('revenue', currFile);
-    // console.log(`similarResults`, similarResults);
-  }
-});
+// const revenues = Object.keys(files).map(key => {
+//   const currFile = files[key];
+//   // if (key !== 'DIS-Q1-2018') return;
+//   // const contextRef = xbrlUtils.getContext(currFile);
+//   // if (contextRef !== '') return;
+//   try {
+//     return {
+//       symbol: xbrlUtils.getTradingSymbol(currFile),
+//       revenue: xbrlUtils.getRevenue(currFile),
+//       period: xbrlUtils.getQuater(currFile) + '-' + xbrlUtils.getYear(currFile),
+//       cik: xbrlUtils.getCik(currFile),
+//     };
+//   } catch(error) {
+//     console.log('key %s, revenues:error', key, error);
+//     // const similarResults = getKeySimilarTo('revenue', currFile);
+//     // console.log(`similarResults`, similarResults);
+//   }
+// });
 // console.log(`revenues.length`, revenues.length);
 // console.log(`revenues`, revenues);
 
-const incomes = Object.keys(files).map(key => {
-  const currFile = files[key];
-  // if (key !== '') return;
-  // const contextRef = xbrlUtils.getContext(currFile);
-  // if (contextRef !== '') return;
-  try {
-    return {
-      symbol: xbrlUtils.getTradingSymbol(currFile),
-      income: xbrlUtils.getIncome(currFile),
-      period: xbrlUtils.getQuater(currFile) + '-' + xbrlUtils.getYear(currFile),
-      cik: xbrlUtils.getCik(currFile),
-    };
-  } catch(error) {
-    console.log('key %s, incomes:error', key, error);
-    // console.log(`xbrlUtils.getContext(currFile)`, xbrlUtils.getContext(currFile));
-    // console.log(`currFile['us-gaap:NetIncomeLoss']`, currFile['us-gaap:NetIncomeLoss']);
-    // console.log(`getKeySimilarTo('income', currFile)`, getKeySimilarTo('income', currFile));
-    // console.log(`similarResults`, similarResults);
-  }
-});
+// const incomes = Object.keys(files).map(key => {
+//   const currFile = files[key];
+//   // if (key !== '') return;
+//   // const contextRef = xbrlUtils.getContext(currFile);
+//   // if (contextRef !== '') return;
+//   try {
+//     return {
+//       symbol: xbrlUtils.getTradingSymbol(currFile),
+//       income: xbrlUtils.getIncome(currFile),
+//       period: xbrlUtils.getQuater(currFile) + '-' + xbrlUtils.getYear(currFile),
+//       cik: xbrlUtils.getCik(currFile),
+//     };
+//   } catch(error) {
+//     console.log('key %s, incomes:error', key, error);
+//     // console.log(`xbrlUtils.getContext(currFile)`, xbrlUtils.getContext(currFile));
+//     // console.log(`currFile['us-gaap:NetIncomeLoss']`, currFile['us-gaap:NetIncomeLoss']);
+//     // console.log(`getKeySimilarTo('income', currFile)`, getKeySimilarTo('income', currFile));
+//     // console.log(`similarResults`, similarResults);
+//   }
+// });
 // console.log(`incomes.length`, incomes.length);
 // console.log(`incomes`, incomes);
+
+
 
 // const shares = Object.keys(files).map(key => {
 //
@@ -184,10 +184,10 @@ const incomes = Object.keys(files).map(key => {
 //
 //   try {
 //     return {
-//       symbol: xbrlUtils.getTradingSymbol(currFile),
+//       // symbol: xbrlUtils.getTradingSymbol(currFile),
 //       income: xbrlUtils.getShares(currFile),
-//       period: xbrlUtils.getQuater(currFile) + '-' + xbrlUtils.getYear(currFile),
-//       cik: xbrlUtils.getCik(currFile),
+//       // period: xbrlUtils.getQuater(currFile) + '-' + xbrlUtils.getYear(currFile),
+//       // cik: xbrlUtils.getCik(currFile),
 //     };
 //   } catch(error) {
 //     console.log('shares:error', error);
@@ -197,8 +197,8 @@ const incomes = Object.keys(files).map(key => {
 //     // console.log(`similarResults`, similarResults);
 //   }
 // });
-// console.log(`incomes.length`, incomes.length);
-// console.log(`incomes`, incomes);
+// console.log(`shares.length`, shares.length);
+// console.log(`shares`, shares);
 
 // const xbrlTree = xbrl['xbrl'] || xbrl['xbrli:xbrl'];
 //
@@ -250,3 +250,46 @@ const incomes = Object.keys(files).map(key => {
 //
 // // const tradingSymbol = xbrlUtils.getTradingSymbol(xbrlTree);
 // // console.log(`tradingSymbol`, tradingSymbol);
+
+
+// const parsedData = Object.keys(files).map(key => {
+//   const currFile = files[key];
+//   return {
+//     symbol: xbrlUtils.getTradingSymbol(currFile),
+//     quarter: xbrlUtils.getQuater(currFile),
+//     year: xbrlUtils.getYear(currFile),
+//     cik: xbrlUtils.getCik(currFile),
+//     revenue: xbrlUtils.getRevenue(currFile),
+//     income: xbrlUtils.getIncome(currFile),
+//   };
+// });
+// console.log(`parsedData.length`, parsedData.length);
+// console.log(`parsedData`, parsedData);
+// fs.writeFileSync(
+//   `${__dirname}/parsed_data.json`,
+//   JSON.stringify(parsedData, null, 2),
+// );
+
+// parsedData.reduce((acc, currData) => {
+//   const uniqueKey = currData['cik'] + currData['quarter'] + currData['year'];
+// }, []);
+
+
+// (async function() {
+//
+//   const params = {
+//     symbol: 'AAPL',
+//     cik: 320193,
+//     type: '10-Q',
+//     num: 10,
+//     ticker: 'AAPL',
+//   };
+//
+//   const cikResult = await search.getCikBasedOnTicker(params);
+//   const documents = await search.getDocumentsLink(params);
+//
+//   console.log(`cikResult`, cikResult);
+//   console.log(`documents`, documents);
+// })();
+
+

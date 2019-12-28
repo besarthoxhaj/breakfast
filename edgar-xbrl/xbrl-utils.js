@@ -148,15 +148,17 @@ exports.getRevenue = function(xbrl) {
   .filter(maybeRevenue => maybeRevenue);
 
   if (maybeRevenues.length > 0 && areAllTheSame(maybeRevenues)) {
-    return maybeRevenues[0]['$t'];
+    return module.exports.formatNumber(maybeRevenues[0]['$t']);
   }
 
   // heuristics time, get bigger number
-  return maybeRevenues.reduce((acc, maybeRevenue) => {
+  const biggerRevenueNum = maybeRevenues.reduce((acc, maybeRevenue) => {
     const currRev = Number(maybeRevenue['$t']);
     const isCurrRevenueBigger = currRev > acc;
     return isCurrRevenueBigger ? currRev : 0;
   }, 0);
+
+  return module.exports.formatNumber(biggerRevenueNum);
 }
 
 /**

@@ -5,6 +5,3 @@ node_modules
 logfile
 npm-debug.log
 *.class
-
-# projects
-edgar-xbrl/data

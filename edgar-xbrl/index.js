@@ -3,22 +3,18 @@
 const fs = require('fs');
 const axios = require('axios');
 const xmlParser = require('xml2json');
+
 const search = require('./search-edgar');
 const find = require('./find-into-xbrl-json-tree');
 const xbrlUtils = require('./xbrl-utils');
-
-// const companies = require('./companies.json');
-const companies = [{"symbol": "JPM", "cik": 19617}];
+const companies = require('./companies.json');
 
 /**
- * Company info
- * @param  {[type]} cik [description]
- * @param  {[type]} num [description]
- * @return {[type]}     [description]
+ * Get company info
  */
 async function getCompanyInfo({ symbol, cik, num, type }) {
 
-  var list = await search({cik, type, num, symbol});
+  var list = await search.getDocumentsLink({cik, type, num, symbol});
 
   const mappedPromises = list.map(async item => {
 
@@ -28,10 +24,10 @@ async function getCompanyInfo({ symbol, cik, num, type }) {
     const quater = xbrlUtils.getQuater(xbrlTree);
     const year = xbrlUtils.getYear(xbrlTree);
 
-    return fs.writeFileSync(
-      `${__dirname}/data/${symbol}-${year}-${quater}.json`,
-      JSON.stringify(xbrl, null, 2),
-    );
+    // return fs.writeFileSync(
+    //   `${__dirname}/data/${symbol}-${year}-${quater}.json`,
+    //   JSON.stringify(xbrl, null, 2),
+    // );
 
     try {
       var result = {

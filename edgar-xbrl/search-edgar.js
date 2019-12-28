@@ -9,13 +9,8 @@ const BASE_PATH = 'https://www.sec.gov';
  * Simple scraper. Given the company id will
  * query the HTML based "www.sec.gov" and return
  * the actual xbrl link in a json format.
- *
- * @param  {[type]} cik  [description]
- * @param  {[type]} type [description]
- * @param  {[type]} num  [description]
- * @return {[type]}      [description]
  */
-module.exports = async function(params) {
+exports.getDocumentsLink = async function getDocumentsLink(params) {
 
   const searchParams = {
     type: params['type'],
@@ -28,7 +23,7 @@ module.exports = async function(params) {
   const $ = cheerio.load(searchPageHtml);
 
   const linksPath = [
-    getColumn({
+    getColumnSelector({
       table: 'Results',
       columnIdx: 2,
     }),
@@ -39,7 +34,7 @@ module.exports = async function(params) {
     .toArray()
     .map(elm => $(elm).attr('href'));
 
-  const datesPath = getColumn({
+  const datesPath = getColumnSelector({
     table: 'Results',
     columnIdx: 4
   });
@@ -59,16 +54,19 @@ module.exports = async function(params) {
 };
 
 /**
- * [subSearch description]
- * @param  {[type]} link [description]
- * @return {[type]}      [description]
+ * Goes to the document link (e.g. 10-Q) and scrapes
+ * the specific file href i.e. look into the 'type'
+ * column for 'XML' or 'EX-101.INS'
+ *
+ * Example of Apple 3rd quarter documents.
+ * https://www.sec.gov/Archives/edgar/data/320193/000032019319000076/0000320193-19-000076-index.htm
  */
 async function subSearch(link) {
 
   const { data: filingPageHtml } = await axios.get(link.href);
   const $ = cheerio.load(filingPageHtml);
 
-  const docsPath = getColumn({
+  const docsPath = getColumnSelector({
     table: 'Data Files',
     columnIdx: 3
   });
@@ -77,7 +75,7 @@ async function subSearch(link) {
     .toArray()
     .map(elm => $(elm).children().attr('href'));
 
-  const typesPath = getColumn({
+  const typesPath = getColumnSelector({
     table: 'Data Files',
     columnIdx: 4
   });
@@ -111,9 +109,10 @@ async function subSearch(link) {
 }
 
 /**
- * Search
- * @param  {[type]} params [description]
- * @return {[type]}        [description]
+ * Construct the search URL
+ *
+ * Example of Apple list of 10-Q's
+ * https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&type=10-Q&CIK=320193
  */
 function getSearchPath(params) {
 
@@ -121,7 +120,6 @@ function getSearchPath(params) {
   // multiple of 10
   const count = params['count'] > 10 ? 20 : 10;
 
-  // https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&type=10-Q&CIK=
   return [
     'https://www.sec.gov/cgi-bin/browse-edgar?',
     'action=getcompany&CIK=' + params['cik'],
@@ -131,11 +129,10 @@ function getSearchPath(params) {
 }
 
 /**
- * [getColumn description]
- * @param  {[type]} params [description]
- * @return {[type]}        [description]
+ * Construct a table selector
+ *
  */
-function getColumn(params) {
+function getColumnSelector(params) {
 
   return [
     `table[summary="${params['table']}"]`,
@@ -143,4 +140,30 @@ function getColumn(params) {
     'tr',
     `td:nth-child(${params['columnIdx']})`,
   ].join(' > ');
+}
+
+/**
+ *
+ * https://www.sec.gov/cgi-bin/browse-edgar?CIK=AAPL&owner=exclude&action=getcompany
+ */
+exports.getCikBasedOnTicker = async function getCikBasedOnTicker({ ticker }) {
+
+  const searchPath = [
+    'https://www.sec.gov/cgi-bin/browse-edgar?',
+    'action=getcompany',
+    '&owner=exclude',
+    '&CIK=' + ticker,
+  ].join('');
+
+  const { data: searchPageHtml } = await axios.get(searchPath);
+  const $ = cheerio.load(searchPageHtml);
+
+  const cikSelector = [
+    '.companyInfo',
+    '.companyName',
+    'a'
+  ].join(' > ');
+
+  const maybeCik = $(cikSelector).text().split(' ')[0];
+  return Number(maybeCik);
 }
