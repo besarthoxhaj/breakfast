@@ -10,7 +10,8 @@
 | `[A-Z]`  | **range**                                           |
 | `[^ABC]` | **negated set**                                     |
 | `.`      | **dot** anything except line breaks. i.e. `[^\n\r]` |
-|  `\b`    | word **boundary**                                   |
+| `\b`     | word **boundary**                                   |
+| `^abc`   | **starts** with `abc`                               |
 
 ## References
 

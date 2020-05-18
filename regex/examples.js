@@ -3,6 +3,26 @@
 var test = require('../tape/index.js');
 var deepEqual = require('../deep-equal/index.js');
 
+test('REGEX -> FOO-*, BAr.*, L.*, LA-*', t => {
+
+  const pattern = /([A-Z]+)[\-\.]/;
+
+  const texts = [
+    'FOO-12-01',
+    'BAR.12-01',
+    'LO-12-01',
+    'Lo-12-01',
+    'A.12-01',
+  ];
+
+  const matches = texts
+    .map(text => (text.match(pattern) || [])[1])
+    .filter(elm => elm);
+
+  t.ok(deepEqual(matches, ["FOO","BAR","LO","A"]), 'correct matches');
+  t.end();
+});
+
 test('REGEX -> *CCC-NNN*', t => {
 
   const pattern = /[A-Z]{3}-[0-9]{3}/i;
@@ -74,7 +94,7 @@ test('REGEX -> CCC-xxxxx-yyyy-NNN*', t => {
   t.end();
 });
 
-test.only('REGEX -> CCC-xxx[xx]-yyyy-NNN', t => {
+test('REGEX -> CCC-xxx[xx]-yyyy-NNN', t => {
 
   const initial = /eol_[A-Z]{2}[0-9]{4,5}[-]{3,4}/;
   const middle = /[0-9]{4}-Q[0-9]{4}_STD_[0-9]{2,3}_/;
@@ -90,48 +110,24 @@ test.only('REGEX -> CCC-xxx[xx]-yyyy-NNN', t => {
 
   const results = texts.map(text => pattern.test(text));
   const matches = texts.map(text => text.match(pattern)[1]);
-  console.log(`results`, results);
-  console.log(`matches`, matches);
+  // console.log(`results`, results);
+  // console.log(`matches`, matches);
   const areTrue = results.every(result => result);
   t.ok(areTrue, 'all true');
   t.end();
 });
 
+test.only('REGEX -> CCC-xxx[xx]-yyyy-NNN', t => {
+
+  const pattern = /^(\d*|\.\d*|\d*\.\d*)([A-Z])/i;
+  const texts = [ '10T', '10.55T', '.5T', 'T' ];
+
+  const results = texts.map(text => pattern.test(text));
+  const matches = texts.map(text => text.match(pattern));
+  // console.log(`results`, results);
+  console.log(`matches`, matches);
+  // t.ok(deepEqual(matches, ['T', 'T', 'T']), 'matches');
+  t.end();
+});
+
 test.init();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
