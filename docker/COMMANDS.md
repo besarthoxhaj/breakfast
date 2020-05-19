@@ -1,6 +1,15 @@
 ## Commands
 
-List of most used commands and what they do:
+Three main commands:
+
+```sh
+$ docker build .                         # build current Dockerfile
+$ docker image ls                        # list images
+$ docker run {IMAGE}                     # run image or create a container
+$ docker container ls                    # list running containers
+$ docker container ls --all              # list all containers
+$ docker exec -it {CONTAINER} /bin/bash  # run a bash terminal in the container
+```
 
 #### docker container ls - [docs](https://docs.docker.com/engine/reference/commandline/container_ls/)
 

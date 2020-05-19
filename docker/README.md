@@ -34,14 +34,14 @@ Or it may fail if you don't have hte right credentials:
 ```sh
 $ docker run hello-world
 #Unable to find image 'hello-world:latest' locally
-# docker: Error response from daemon: Get https://registry-1.docker.io/v2/library/hello-world/manifests/latest: unauthorized: incorrect username or password.
+# docker: Error response from daemon: Gethttps://registry-1.docker.io/v2/library/hello-world/manifests/latest: unauthorized: incorrect username or password.
 # See 'docker run --help'.
 ```
 
 ## Install
 
-Go to the docker website and download the free version. Once installed, the `docker` command
-will be available:
+Go to the docker website and download the free version. Once installed, the
+`docker` command will be available:
 
 ```sh
 $ docker --version
@@ -69,3 +69,4 @@ $ docker-machine --version
 
 - https://devopscube.com/what-is-docker/
 - https://docs.docker.com/get-started
+- https://stackoverflow.com/q/22272401
