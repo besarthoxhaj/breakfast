@@ -24,7 +24,7 @@ $ docker container ls --help
 #   -s, --size            Display total file sizes
 ```
 
-When a container is running it will looks
+When a container is running it looks
 ```sh
 $ docker container ls --help
 # CONTAINER ID        IMAGE               COMMAND             CREATED                  STATUS              PORTS                  NAMES

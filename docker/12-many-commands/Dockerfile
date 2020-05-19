@@ -1,2 +1,3 @@
 FROM busybox
-RUN echo "RUN"
+RUN echo "HELLO, WORLD!"
+RUN ls
