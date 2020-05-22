@@ -70,3 +70,4 @@ $ docker-machine --version
 - https://devopscube.com/what-is-docker/
 - https://docs.docker.com/get-started
 - https://stackoverflow.com/q/22272401
+- https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
