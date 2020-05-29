@@ -2,6 +2,9 @@ node_modules
 .DS_Store
 *.out
 *.pem
+*.csr
+*.cer
+*.certSigningRequest
 logfile
 npm-debug.log
 *.class
