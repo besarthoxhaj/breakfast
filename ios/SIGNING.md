@@ -2,7 +2,10 @@
 
 
 
-### Certificate Signing Requests
+### Certificate Signing Request
+
+The purpose of the CSR is to have a standardized method for providing this
+information to CAs.
 
 ```sh
 $ openssl genrsa -out private.pem 2048
@@ -35,7 +38,7 @@ $ openssl rsa -in public.pem -text -pubin -noout
 # Public-Key: (2048 bit)
 # modulus           - n
 # Exponent (public) - e
-$ openssl req -new -key private.pem -out Autograph.csr -subj "/emailAddress=foo@bar.com, CN=Hello, C=GB"
+$ openssl req -new -key private.pem -out autograph.csr -subj "/CN=Hello, C=GB"
 $ cat Autograph.csr
 # -----BEGIN CERTIFICATE REQUEST-----
 # MIICcTCCAVkCAQAwLDEqMCgGCSqGSIb3DQEJARYbZm9vQGJhci5jb20sIENOPUhl
@@ -91,9 +94,13 @@ $ openssl req -in Autograph.csr -text -noout
 #          bb:5c:6a:ba:b1:c0:d6:28:14:5a:21:0f:80:21:15:28:70:65:
 #          04:fc:78:13:dc:fa:70:e9:66:42:06:89:43:3a:ac:c8:a1:67:
 #          5a:13:67:00
-$ security find-identity -v -p codesigning
 $ openssl x509 -in ios_development.cer -inform DER -text -noout
 ```
+
+###
+
+The purpose of the CSR is to have a standardized method for providing this
+information to CAs.
 
 
 ### Resources
