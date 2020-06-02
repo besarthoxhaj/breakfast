@@ -10,11 +10,11 @@ compiled version you can run with `./<file>.out`.
 
 ## Debug
 
-If you want to debug of get a better grasp of what's happaning I suggest to run
+If you want to debug or get a better grasp of what's happaning, I suggest to run
 node in debug mode.
 
-- go to `chrome://inspect`
-- click on `Open dedicated DevTools for Node`
+- visit `chrome://inspect`
+- click `Open dedicated DevTools for Node`
 - run your code with `node --inspect-brk [file]`
 
 ## Resources

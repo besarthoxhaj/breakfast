@@ -12,6 +12,10 @@
 | `.`      | **dot** anything except line breaks. i.e. `[^\n\r]` |
 | `\b`     | word **boundary**                                   |
 | `^abc`   | **starts** with `abc`                               |
+| ()       | matching group                                      |
+| []       | character class                                     |
+| {}       | quantifier with specific limits                     |
+| ?        | optional item                                       |
 
 ## References
 
