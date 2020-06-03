@@ -26,6 +26,11 @@ Each hexadecimal value is represented as two characters, for a total of 16.
 | F   | 15  | 1111 |
 
 In `C` it is represented by adding `0x` at the beginning e.g. `0xA` which is 10.
+JavaScript automatically converts hexadecimal number to decimal if written as `0x01`.
+
+```js
+console.log(0xA9); // 185
+```
 
 ### Resources
 - https://en.wikipedia.org/wiki/Hexadecimal
