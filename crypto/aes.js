@@ -95,10 +95,10 @@ class Aes {
     return state.map(xOr);
   }
 
-   /**
-    *
-    *
-    */
+  /**
+   *
+   *
+   */
   static subWord(w) {
     return w.map(elm => Aes.sBox[elm]);
   }
@@ -108,19 +108,20 @@ class Aes {
    *
    */
   static shiftRows(w) {
-
-    const getRow = array => array.filter((_, idx) => (idx % 4) === 0);
+    console.log(`w.toByteStr()`, w.toByteStr());
+    const getRow = inputArr => inputArr.filter((_, idx) => !(idx % 4));
     const matrix = new Array(4).fill().map((_, idx) => getRow(Aes.rotWord(w, idx)));
-    console.log(`matrix`, matrix);
+    const rotMatrix = matrix.map((sub, idx) => Aes.rotWord(sub, idx));
+    console.log(`a`, a);
   }
 
   /**
-  *
-  *
-  */
+   *
+   *
+   */
   static rotWord(w, size=1) {
     const init = w.slice(0, size);
-    const end = w.slice(-size);
+    const end = w.slice(size);
     return end.concat(init);
   }
 }
@@ -167,6 +168,17 @@ Aes.rCon = [
 ];
 
 /**
+ * Length: 4
+ *
+ */
+Aes.mix = [
+  [ 0x02, 0x03, 0x01, 0x01 ],
+  [ 0x01, 0x02, 0x03, 0x01 ],
+  [ 0x01, 0x01, 0x02, 0x03 ],
+  [ 0x03, 0x01, 0x01, 0x02 ],
+];
+
+/**
  *
  *
  */
@@ -177,4 +189,17 @@ const keySchedule = Aes.keyExpansion(key128.toBytes());
 const chiperText = Aes.chiper(myText.toBytes(), keySchedule);
 // console.log(`keySchedule`, keySchedule);
 
+// function shiftArray(array, size) {
+//   const currInit = array.slice(0, size);
+//   const currEnd = array.slice(size);
+//   return currEnd.concat(currInit);
+// }
 
+const a = [
+   'x1',  'x2',  'x3',  'x4',
+   'x5',  'x6',  'x7',  'x8',
+   'x9', 'x10', 'x11', 'x12',
+  'x13', 'x14', 'x15', 'x16',
+];
+// const b = a.filter((_, idx) => !(idx % 4));
+// console.log(`b`, shiftArray(a, 2));
