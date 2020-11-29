@@ -1,3 +1,12 @@
+'use strict';
+
+var deepEqual = require('../deep-equal/index.js');
+
+/**
+ *
+ *
+ *
+ */
 var test = (function () {
   'use strict';
 
@@ -9,6 +18,15 @@ var test = (function () {
     var t = {
       equal: function(actual, expected, message) {
         if (actual === expected) {
+          console.log('PASS: ' + message);
+          testResult.pass++;
+        } else {
+          console.error('ERROR: ' + message + '. Expected: ' + expected + '. Actual: ' + actual);
+          testResult.fail++;
+        }
+      },
+      deepEqual: function(actual, expected, message) {
+        if (deepEqual(actual, expected)) {
           console.log('PASS: ' + message);
           testResult.pass++;
         } else {
@@ -110,6 +128,11 @@ var test = (function () {
   return test;
 }());
 
+/**
+ *
+ *
+ *
+ */
 if (typeof module === 'object' && module.exports) {
   module.exports = test;
 }
