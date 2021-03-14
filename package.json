@@ -21,8 +21,10 @@
   },
   "homepage": "https://github.com/besarthoxhaj/breakfast#readme",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
+    "browserify": "^17.0.0",
     "cheerio": "^1.0.0-rc.3",
+    "http-server": "^0.12.3",
     "ramda": "^0.27.0",
     "xml2json": "^0.11.2"
   }
